@@ -1,0 +1,138 @@
+<div class="container">
+  <nav class="navbar  fixed-top gradient navbar-expand-lg navbar-light  " id="menu">
+    <a class="navbar-brand" routerLink="/desktop"><img style="height: 40px" src="../../../assets/images/log.png" alt="logo" *ngIf="widthScreen<992"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <a class="navbar-brand" routerLink="/desktop" *ngIf="widthScreen>992"><img src="../../../assets/images/log.png" alt="logo"></a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item nav-item-1">
+          <a class="nav-link "  routerLink="/desktop"  routerLinkActive="active-link">{{'menu.home' | translate}}
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item nav-item-2">
+          <a
+            class="nav-link"
+            routerLink="/my-games"
+            routerLinkActive="active-link" (click)="onClickLogin(false)">{{'menu.myscore' | translate}}</a>
+        </li>
+        <li class="nav-item nav-item-3">
+          <a
+            class="nav-link"
+            routerLink="/games"
+            routerLinkActive="active-link" (click)="onClickLogin(false)">{{'menu.games' | translate}}</a>
+        </li>
+        <li class="nav-item nav-item-4">
+          <a
+            class="nav-link"
+            routerLink="/rankings"
+            routerLinkActive="active-link" (click)="onClickLogin(false)">{{'menu.rank' | translate}}</a>
+        </li>
+        <li class="nav-item nav-item-5">
+          <a
+            class="nav-link"
+            routerLink="/teams"
+            routerLinkActive="active-link" (click)="onClickLogin(false)">{{'menu.teams' | translate}}</a>
+        </li>
+        <li class="nav-item nav-item-6">
+          <a
+            class="nav-link"
+            routerLink="/rules"
+            routerLinkActive="active-link">{{'menu.rules' | translate}}</a>
+        </li>
+        <li class="nav-item" *ngIf="logged">
+          <a
+            class="nav-link"
+            routerLink="/account/profile"
+            routerLinkActive="active-link"
+            [class.activeTab]="activeTab">
+              <span>{{'menu.account' | translate}}
+                <span *ngIf="unreadMsg.length != 0" class="notification-counter"></span>
+              </span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isAuthenticated() && auth.getUser().admin">
+          <a class="nav-link"
+              routerLink="/admin"
+              routerLinkActive="active-link">{{'menu.admin' | translate}}
+            </a>
+        </li>
+        <li class="nav-item show nav-item-7" *ngIf="!logged">
+          <div class=" val dropdown" #drop>
+            <a class=" val btn btn-secondary dropdown-toggle"
+                role="button"
+                id="dropdownMenuLink"
+                routerLinkActive
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                (click)="onClickLogin(true)"
+                #dropdownlink>Login
+            </a>
+            <div
+              class="val dropdown-menu arrow_box dropdown-menu-right"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              id="dropdown_login"
+              #dropdown>
+              <article class="login">
+                <p class="log" [ngStyle]="errorMessage && {'padding-bottom': '0px'}"></p>
+                <div>
+                  <p class="error-message" *ngIf="errorMessage">{{errorMessage}}</p>
+                  <p class="error-message" *ngIf="!loginForm.valid">Please enter email!</p>
+                </div>
+                <form [formGroup]="loginForm" #form>
+                  <div
+                    class="form-group"
+                    [ngClass]="{'has-error': (!email.valid && (email.dirty || email.touched))}">
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      class="form-control"
+                      id="formGroupExampleInputLogin"
+                      placeholder="Email"
+                      [formControl]="email"
+                      autocomplete="email">
+                  </div>
+                  <div
+                    class="form-group"
+                    [ngClass]="{'has-error': (!password.valid && (password.dirty || password.touched))}">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="formGroupExampleInput2Login"
+                      placeholder="Password"
+                      required
+                      [formControl]="password"
+                      autocomplete="off">
+                  </div>
+                  <div class="form-group btn-login">
+                    <button
+                      type="submit"
+                      class="btn btn-outline-success"
+                      [disabled]="!loginForm.valid"
+                      (click)="login(loginForm.value)">Log in
+                    </button>
+                  </div>
+                  <div class="wrap-btn">
+                    <div class="form-group frg-psw">
+                      <a routerLink="/forgot-password" class="forgot-password" >{{'forgot.forgot' | translate}}?</a>
+                    </div>
+                    <div class="form-group new-account">
+                      <a routerLink="/register" class="create-account">{{'register.register' | translate}}</a>
+                    </div>
+                  </div>
+                </form>
+              </article>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

@@ -1,0 +1,295 @@
+<section class="container-fluid login-main">
+  <app-header-notification></app-header-notification>
+      <div class="wrap_menu">
+        <app-menu></app-menu>
+      </div>
+      <div class="container rule">
+        <div class="row">
+          <div class="wrap">
+            <ul class="nav" id="tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">GAME RULES</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">FAQ</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active rules" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <h2>{{'rules.game_rules' | translate}}</h2>
+               <h5>{{'rules.about_' | translate}} </h5>
+                <p style="text-indent: 30px">
+                  {{'rules.the_game_par' | translate}}
+                </p>
+                <p style="text-indent: 30px">
+                  {{'rules.the_game_par2' | translate}}
+                </p>
+                <p style="text-indent: 30px">
+                  {{'rules.the_game_par3' | translate}}
+                </p>
+                <p style="text-indent: 30px">
+                  {{'rules.the_game_par4' | translate}}
+                </p>
+                <p style="text-indent: 30px">
+                  {{'rules.the_game_par5' | translate}}
+                </p>
+
+                <h3>{{'rules.fill_result' | translate}}</h3>
+                <p  style="text-indent: 30px">
+                  {{'rules.fill_par' | translate}}
+                </p>
+                <p  style="text-indent: 30px">
+                  {{'rules.fill_par2' | translate}}
+                </p>
+                <p  style="text-indent: 30px">
+                  {{'rules.fill_par3' | translate}}
+                </p>
+                <h3>{{'rules.rank_points' | translate}}</h3>
+                <p style="text-indent: 30px">
+                  {{'rules.rank_points_par' | translate}}
+                </p>
+                <p style="text-indent: 30px">
+                  {{'rules.rank_points_par2' | translate}}
+                </p>
+                <p style="text-indent: 30px">
+                  {{'rules.rank_points_par3' | translate}}
+                </p>
+                <div>
+                    <table class="table table-bordered table-dark">
+                      <thead>
+                        <tr class="bg-success">
+                          <th scope="col">{{'rules.hit' | translate}}</th>
+                          <th scope="col">{{'rules.points' | translate}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">{{'rules.ex_1' | translate}}</th>
+                          <td class="text-center">30</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">{{'rules.ex_2' | translate}}
+                              </th>
+                          <td class="text-center">20</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">{{'rules.ex_3' | translate}}
+                              </th>
+                          <td class="text-center">10</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">{{'rules.ex_4' | translate}} </th>
+                          <td class="text-center">10</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">{{'rules.ex_5' | translate}}</th>
+                          <td class="text-center">5</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">{{'rules.ex_6' | translate}} </th>
+                          <td class="text-center">15</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+                <h6>{{'rules.ex' | translate}}:</h6>
+                <div>
+                  <table class="table table-bordered table-dark">
+                    <thead>
+                      <tr class="bg-success">
+                        <th scope="col">{{'rules.desc' | translate}} </th>
+                        <th scope="col">{{'rules.guess' | translate}} </th>
+                        <th scope="col">{{'rules.res' | translate}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">
+                          {{'rules.desc_ex_1' | translate}}
+                        </th>
+                        <td class="text-center">Team A 2 : 0 Team B</td>
+                        <td class="text-center">Team A 2 : 0 Team B</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          {{'rules.desc_ex_2' | translate}}
+                        </th>
+                        <td class="text-center">Team A 3 : 0 Team B</td>
+                        <td class="text-center">Team A 2 : 0 Team B</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          {{'rules.desc_ex_3' | translate}}
+                        </th>
+                        <td class="text-center">Team A 4 : 1 Team B</td>
+                        <td class="text-center">Team A 2 : 0 Team B</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          {{'rules.desc_ex_4' | translate}}
+                        </th>
+                        <td class="text-center">Team A 3 : 3 Team B</td>
+                        <td class="text-center">Team A 0 : 0 Team B</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">
+                          {{'rules.desc_ex_5' | translate}}
+                        </th>
+                        <td class="text-center">Team A 3 : 1 Team B</td>
+                        <td class="text-center">Team A 0 : 1 Team B</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p style="text-indent: 30px">
+                    {{'rules.par_update' | translate}}                  
+                </p>
+                <h3>{{'rules.team_ex' | translate}} </h3>
+                <p>{{'rules.team_rule' | translate}}</p>
+                <p>{{'rules.team_rule2' | translate}}</p>
+                <p>{{'rules.team_rule3' | translate}}</p>
+                <div>
+                    <table class="table table-bordered table-dark">
+                      <thead>
+                        <tr class="bg-success">
+                          <th scope="col">{{'rules.col_1' | translate}} </th>
+                          <th scope="col">{{'rules.col_2' | translate}} </th>
+                          <th scope="col">{{'rules.col_3' | translate}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row">
+                            {{'rules.team_ex1_1' | translate}}
+                          </th>
+                          <td class="text-center">{{'rules.team_ex1_2' | translate}}</td>
+                          <td class="text-center">{{'rules.team_ex1_3' | translate}}</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            {{'rules.team_ex2_1' | translate}}
+                          </th>
+                          <td class="text-center">{{'rules.team_ex2_2' | translate}}</td>
+                          <td class="text-center">{{'rules.team_ex2_3' | translate}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <h3>{{'rules.general' | translate}}</h3>
+                  <p>{{'rules.gen_par' | translate}}</p>
+                  <p>{{'rules.gen_par2' | translate}}</p>
+                  <p>{{'rules.gen_par3' | translate}}</p>
+                  <p>{{'rules.gen_par4' | translate}}</p>
+                  <p>{{'rules.gen_par5' | translate}}</p>
+                  <p>{{'rules.gen_par6' | translate}}</p>
+              </div>
+              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div id="accordion">
+                  <div class="question-card">
+
+                    <div class="card-header btn btn-link collapsed" data-toggle="collapse" data-target="#question1">
+                      <h5 class="mb-0">
+                          {{'rules.quest_1' | translate}}
+                      </h5>
+                    </div>
+
+                    <div id="question1" class="collapse">
+                      <div class="card-body"> {{'rules.answ_1' | translate}}</div>
+
+                    </div>
+                  </div>
+                  <div class="question-card">
+                    <div class="card-header btn btn-link collapsed" data-toggle="collapse" data-target="#question2">
+                      <h5 class="mb-0">
+                          {{'rules.quest_2' | translate}}
+                      </h5>
+                    </div>
+                    <div id="question2" class="collapse">
+                      <div class="card-body"> {{'rules.answ_2' | translate}}</div>
+                    </div>
+                  </div>
+                  <div class="question-card">
+                    <div class="card-header btn btn-link collapsed" data-toggle="collapse" data-target="#question3">
+                      <h5 class="mb-0">
+                          {{'rules.quest_3' | translate}}
+                      </h5>
+                    </div>
+                    <div id="question3" class="collapse">
+                      <div class="card-body"> {{'rules.answ_3' | translate}}</div>
+                    </div>
+                  </div>
+                  <div class="question-card">
+                    <div class="card-header btn btn-link collapsed" data-toggle="collapse" data-target="#question4">
+                      <h5 class="mb-0">
+                          {{'rules.quest_4' | translate}}
+                      </h5>
+                    </div>
+                    <div id="question4" class="collapse">
+                      <div class="card-body"> {{'rules.answ_4' | translate}}</div>
+                    </div>
+                  </div>
+                  <div class="question-card">
+                    <div class="card-header btn btn-link collapsed" data-toggle="collapse" data-target="#question5">
+                      <h5 class="mb-0">
+                          {{'rules.quest_5' | translate}}
+                      </h5>
+                    </div>
+                    <div id="question5" class="collapse">
+                      <div class="card-body"> {{'rules.answ_5' | translate}}</div>
+                    </div>
+                  </div>
+                  <div class="question-card">
+                    <div class="card-header btn btn-link collapsed" data-toggle="collapse" data-target="#question6">
+                      <h5 class="mb-0">
+                          {{'rules.quest_6' | translate}}
+                      </h5>
+                    </div>
+                    <div id="question6" class="collapse">
+                      <div class="card-body"> {{'rules.answ_6' | translate}}</div>
+                    </div>
+                  </div>
+                  <div class="question-card">
+                    <div class="card-header btn btn-link collapsed" data-toggle="collapse" data-target="#question7">
+                      <h5 class="mb-0">
+                          {{'rules.quest_7' | translate}}
+                      </h5>
+                    </div>
+                    <div id="question7" class="collapse">
+                      <div class="card-body"> {{'rules.answ_7' | translate}}</div>
+                    </div>
+                  </div>
+                  <div class="question-card">
+                    <div class="card-header btn btn-link collapsed" data-toggle="collapse" data-target="#question8">
+                      <h5 class="mb-0">
+                          {{'rules.quest_8' | translate}}
+                      </h5>
+                    </div>
+                    <div id="question8" class="collapse">
+                      <div class="card-body"> {{'rules.answ_8' | translate}}</div>
+                    </div>
+                  </div>
+
+                  <div class="question-card contact">
+                    <h4>
+                        {{'rules.any_quest' | translate}}<br>
+                      <a href="mailto:Contact@myscoreer.com">Contact@myscoreer.com</a>                          
+                    </h4>
+                    <!-- <div class="card-header btn btn-link collapsed" data-toggle="collapse" data-target="#question5">
+                      <h5 class="mb-0">
+                      </h5>
+                    </div> -->
+                    <!-- <div id="question5" class="collapse">
+                      <div class="card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+    </div>
+  </section>

@@ -1,0 +1,28 @@
+const express = require('express');
+const path = require('path');
+const app = express();
+
+const forceSSL = function() {
+  return function (req, res, next) {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(
+        ['https://', req.get('Host'), req.url].join('')
+      );
+    }
+    next();
+  }
+};
+
+app.use(forceSSL());
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+
+const port = process.env.PORT || 5000;
+
+app.listen(port);
+console.log('World Cup port - ' + port);
+

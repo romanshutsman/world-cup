@@ -1,0 +1,34 @@
+<div class="filter">
+    <div class="filter-header">
+      <img src="../../../assets/images/filter.png" alt="filter">
+      <p>FILTER</p>
+    </div>
+    <p class="head">Games</p>
+    <div class="checkboxes">
+      <div class="groups">
+        <section class="all-groups-stage">
+          <input id="all-groups" [(ngModel)]="selectedAll" (change)="selectAll();" type="checkbox">
+          <label for="all-groups"  class="side-label"></label>
+
+          <input type="checkbox" name="" id="all-groups-arrow">
+            <label (click)="show();" class="arr_tog" for="all-groups-arrow">
+              <span class="arrow">Groups
+                <img class="arrow_toogle" src="../../../assets/images/arroow_down.png" alt="drop">
+              </span>
+            </label>
+        </section>
+        <div class="group-stage">
+          <div *ngFor="let n of group_stage" class="group-item {{n.class}}">
+                <input type="checkbox" [(ngModel)]="n.selected" (change)="checkIfAllSelected();" id={{n.id}}>
+              <label for={{n.id}} class="side-label">{{n.name}}</label>
+          </div>
+        </div>
+        <div class="play-off">
+          <div *ngFor="let n of play_off" class="group-item {{n.class}}">
+              <input type="checkbox"  id={{n.id}}>
+              <label for={{n.id}} class="side-label">{{n.name}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

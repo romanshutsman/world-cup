@@ -1,0 +1,39 @@
+
+<section class="container-fluid login-main">
+  <div class="gradient">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <app-menu></app-menu>
+        </div>
+      </div>
+      <div class="row">
+        <div class="wrap">
+          <article class="login">
+              <p class="log" [ngStyle]="errorMessage && {'padding-bottom': '42px'}">LOG IN</p>
+              <div>
+                <p class="error-message" *ngIf="errorMessage">{{errorMessage}}</p>
+              </div>
+              <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+                  <div class="form-group" [ngClass]="{'has-error': (!email.valid && (email.dirty || email.touched))}">
+                    <input type="email" class="form-control" id="formGroupExampleInputCHANGE" placeholder="Email" [formControl]="email" autocomplete="off">
+                  </div>
+                  <div class="form-group" [ngClass]="{'has-error': (!password.valid && (password.dirty || password.touched))}">
+                    <input type="password" class="form-control" id="formGroupExampleInput2CHANGE" placeholder="Password" [formControl]="password" autocomplete="off">
+                  </div>
+                  <div class="form-group frg-psw">
+                    <a routerLink="/forgot-password" class="forgot-password" >Forgot password?</a>
+                  </div>
+                  <div class="form-group btn-login">
+                        <button type="submit" class="btn btn-outline-success" [disabled]="!loginForm.valid">Log in</button>
+                  </div>
+                  <div class="form-group new-account">
+                      <a routerLink="/register" class="create-account">Create new account</a>
+                  </div>
+              </form>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

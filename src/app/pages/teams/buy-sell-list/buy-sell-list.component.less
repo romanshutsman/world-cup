@@ -1,0 +1,576 @@
+@font-face {
+  font-family: 'HelveticaNeueCyr-Roman';
+  src: url('../../../../assets/fonts/HelveticaNeueCyr-Roman.otf');
+}
+@font-face {
+  font-family: 'HelveticaNeueCyr-Medium';
+  src: url('../../../../assets/fonts/HelveticaNeueCyr-Medium.ttf');
+}
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
+  .rect2 {
+    -webkit-animation-delay: -1.1s;
+    animation-delay: -1.1s;
+  }
+  .rect3 {
+     -webkit-animation-delay: -1.0s;
+     animation-delay: -1.0s;
+   }
+  .rect4 {
+    -webkit-animation-delay: -0.9s;
+    animation-delay: -0.9s;
+  }
+  .rect5 {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+  }
+}
+
+.spinner>div {
+  background-color: rgba(255, 255, 255, 1);
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+
+@-webkit-keyframes sk-stretchdelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4)
+  }
+  20% {
+    -webkit-transform: scaleY(1.0)
+  }
+}
+
+@keyframes sk-stretchdelay {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+}
+body{
+  font-family: 'HelveticaNeueCyr-Roman';
+}
+button.btn.btn-outline-success {
+  height: 43px;
+  border-radius: 0;
+  font-size: 18px;
+  line-height: 1.33;
+  color: rgba(255, 255, 255, 1);
+}
+button.btn.btn-outline-success:hover {
+  color: rgba(255, 255, 255, 1);
+  background: none;
+}
+.nobody{
+  color: rgba(255, 255, 255, 1);
+  font-family: HelveticaNeueCyr-Roman;
+  font-size: 22px;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.container-fluid{
+  background: url(../../../../assets/images/image-compressor.png) no-repeat;
+  margin: 0 auto;
+  background-size: 100%;
+  background-position-y: 70%;
+  background-attachment: fixed;
+  background-size: cover;
+  height: 100%;
+  min-height: 100vh;
+  max-width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+  background-attachment: fixed;
+  padding-bottom: 50px;
+}
+
+.container{
+  padding: 0;
+
+}
+.wrap_menu{
+  width: 100%;
+  height: 93px;
+  background: linear-gradient(to right, rgba(33, 200, 90,0.79), rgba(28, 80, 234,0.79));
+}
+
+.wrap{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  background-color: rgba(0, 0 , 0, 0.65);
+  margin-top: 25px;
+  height: 100%;
+}
+
+.menu-table {
+  max-width: 722px;
+  height: 100%;
+  background-color: rgba(0,0,0,.5);
+  margin: 25px;
+}
+.nav{
+  justify-content: center;
+
+}
+
+.nav-link{
+  font-family: HelveticaNeueCyr-Roman;
+  font-size: 22px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: #fff;
+  padding: 0;
+  line-height: 2;
+  margin: 20px 20px
+}
+.nav-item .active{
+  color: rgba(16, 218, 6,1);
+  border-bottom: 2px solid rgba(16, 218, 6,1);
+}
+
+.table thead th {
+  font-family: HelveticaNeueCyr-Roman;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: #ffffff;
+  border: none ;
+}
+
+.table thead{
+  height: 40px;
+  margin-top: 20px;
+  background-color: rgba(0,0,0,.4);
+}
+
+.table tbody {
+  margin-top: 30px!important;
+}
+
+.table th {
+  border-top: none ;
+}
+
+.table td{
+  font-family: HelveticaNeueCyr-Roman;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.67;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: #ffffff;
+  border-top: none ;
+}
+
+
+
+.buy-sellect-team{
+
+  background-color: rgba(0,0,0,.5);
+  width: 100%;
+  padding: 12px 25px;
+  margin-bottom: 25px;
+  font-family: HelveticaNeueCyr-Roman;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.buy-sellect-team-list{
+  max-width: 229px;
+  height: 39px;
+  margin-left: 25px;
+  font-family: HelveticaNeueCyr-Roman;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  text-align: left;
+  text-transform: uppercase;
+  background-color: #313134;
+  border-radius: 0;
+  border: none;
+  outline: 0;
+  outline-offset: 0;
+  margin-bottom: 25px;
+  color: #fff;
+}
+
+.sellect-team-price{
+  text-transform: uppercase;
+  background-color: #313134;
+  border-radius: 0;
+  border: none;
+  outline: 0;
+  outline-offset: 0;
+  margin: 0 0 25px 25px;
+  padding: 5px 10px;
+  height: 39px;
+  font-size: 18px;
+  color: #fff;
+  max-width: 230px;
+}
+
+form button {
+  max-width: 161px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.38;
+  letter-spacing: -0.3px;
+  text-align: center;
+  padding: 8px 65px;
+  display: block;
+  margin: 0 auto;
+}
+
+.sell-sellect-team{
+
+  background-color: rgba(0,0,0,.5);
+  width: 100%;
+  padding: 12px 25px;
+  margin-bottom: 10px;
+  font-family: HelveticaNeueCyr-Roman;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  text-align: left;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.sell-sellect-team-list{
+  max-width: 229px;
+  height: 39px;
+  margin-left: 25px;
+  font-family: HelveticaNeueCyr-Roman;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  text-align: left;
+  text-transform: uppercase;
+  background-color: #313134;
+  border-radius: 0;
+  border: none;
+  outline: 0;
+  outline-offset: 0;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.sell-price{
+  background-color: #313134;
+  border-radius: 0;
+  border: none;
+  outline: 0;
+  outline-offset: 0;
+  margin: 0 0 10px 25px;
+  padding: 5px 10px;
+  height: 39px;
+  font-size: 18px;
+  color: #fff;
+  max-width: 230px;
+}
+
+.sell-user-email{
+  background-color: #313134;
+  border-radius: 0;
+  border: none;
+  outline: 0;
+  outline-offset: 0;
+  margin: 0 0 10px 25px;
+  padding: 5px 10px;
+  height: 39px;
+  font-size: 18px;
+  color: #fff;
+  max-width: 230px;
+}
+
+
+.buy-sell-list{
+  min-width: 1120px;
+  height: 100%;
+  background-color: rgba(0,0,0,.5);
+  margin: 25px;
+}
+
+.solution-tab{
+  text-align: left!important;
+  padding-left: 110px;
+}
+
+.solution-content{
+  display: flex;
+  justify-content: space-around;
+
+}
+
+.solution-list{
+  max-width: 160px;
+  height: 39px;
+  margin-left: 25px;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  text-align: center;
+  background-color: #313134;
+  border-radius: 0;
+  border: none;
+  outline: 0;
+  outline-offset: 0;
+  margin-bottom: 10px;
+  color: #fff;
+  outline: green;
+}
+
+.my-offer, .my-offer:focus, .my-offer:active, .my-offer:checked {
+  width: 71px;
+  height: 39px;
+  background-color: #313134;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: -0.4px;
+  text-align: center;
+  outline: none;
+
+}
+
+.solution-agree, .solution-disagree{
+  width: 25px;
+  height: 25px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  background: url("../../../../assets/images/another_price_check.png") no-repeat bottom ;
+
+}
+
+.solution-agree:hover, .solution-disagree:hover{
+  cursor: pointer;
+  transition: all 0.5s;
+  transform: scale(1.1);
+}
+
+.notification-tab{
+  text-align: left!important;
+  padding-left: 70px;
+}
+
+.solution-disagree{
+  background: url("../../../../assets/images/another_price_reject.png") no-repeat bottom ;
+}
+.nav-item {
+  position: relative;
+}
+/***************** teams TOOLTIP *****/
+
+.tool_tip.teams {
+  position: absolute;
+  display: inline-block;
+  top: 28px;
+  right: -6px;
+}
+.arrow-up.teams{
+  display: none;
+}
+.tool_tip.teams:hover .arrow-up.teams {
+  display: block;
+  position: relative;
+  left: 5px;
+  top: 3px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+}
+
+
+.tool_tip.teams .tooltiptext.teams {
+  font-size: 14px;
+  visibility: hidden;
+  max-width: 240px;
+  min-width: 120px;
+  width: 100%;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 110%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tool_tip.teams:hover .tooltiptext.teams {
+  visibility: visible;
+}
+
+img.info_img{
+  width: 20px;
+  height: 20px;
+}
+/***************** END teams TOOLTIP *****/
+
+/***************** offer TOOLTIP *****/
+.tool_tip.offer {
+  position: absolute;
+  display: inline-block;
+  top: 28px;
+  right: -6px;
+}
+.arrow-up.offer{
+  display: none;
+}
+.tool_tip.offer:hover .arrow-up.offer {
+  display: block;
+  position: relative;
+  left: 5px;
+  top: 3px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+}
+
+
+.tool_tip.offer .tooltiptext.offer {
+  font-size: 14px;
+  visibility: hidden;
+  max-width: 240px;
+  min-width: 120px;
+  width: 100%;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 110%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tool_tip.offer:hover .tooltiptext.offer {
+  visibility: visible;
+}
+/***************** END offer TOOLTIP *****/
+/***************** Sell TOOLTIP *****/
+.tool_tip.sell {
+  position: absolute;
+  display: inline-block;
+  top: 28px;
+  right: -6px;
+}
+.arrow-up.sell{
+  display: none;
+}
+.tool_tip.sell:hover .arrow-up.sell {
+  display: block;
+  position: relative;
+  left: 5px;
+  top: 3px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+}
+
+
+.tool_tip.sell .tooltiptext.sell {
+  font-size: 14px;
+  visibility: hidden;
+  max-width: 240px;
+  min-width: 120px;
+  width: 100%;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 110%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tool_tip.sell:hover .tooltiptext.sell {
+  visibility: visible;
+}
+/***************** END Sell TOOLTIP *****/
+
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .buy-sell-list{
+    min-width: 930px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .buy-sell-list{
+    min-width: 700px;
+  }
+  .solution-list {
+    margin-left: 0px;
+  }
+}

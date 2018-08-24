@@ -1,0 +1,146 @@
+.filter{
+    max-width: 255px;
+    width: 100%;
+    max-height: 842px;
+    max-height: unset;
+    padding-bottom: 30px;
+    background-color: rgba(0, 0, 0,0.85);
+    margin-top: 28%;
+}
+.filter-header{
+    display: flex;
+    align-items: center;
+    height: 49px;
+    background-color: rgba(33, 33, 33,0.8);
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.38;
+    letter-spacing: -0.3px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}
+.filter-header img{
+    margin-left: 32px;
+}
+.filter-header p{
+    margin-bottom: 0px;
+    padding-top: 5px;
+    padding-left: 8px;
+}
+
+p.head{
+    font-family: HelveticaNeueCyr-Roman;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: -0.4px;
+    color: rgba(16, 194, 11,1);
+    text-indent: 33px;
+    margin-top: 36px;
+}
+.checkboxes{
+    margin-left: 50px;
+}
+.checkboxes .groups span.arrow{
+    width: 21px;
+    height: 11px;
+}
+input[type="checkbox"]{
+    display: none;
+}
+label {
+    color: white;
+    margin-left: 50px;
+}
+
+label.side-label {
+  display: block;
+  position: relative;
+  margin: 10px 0;
+  padding-left: 50px;
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+label.arr_tog{
+    cursor: pointer;
+}
+.side-label::before,
+.side-label::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.side-label::before {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background:rgba(104, 104, 104, 0.4);
+
+}
+
+
+.side-label::after {
+  display: none;
+  width: 30px;
+  height: 30px;
+  background: url('../../../assets/images/filter_check.png') no-repeat 50% 60%; 
+}
+
+input:checked+.side-label::after {
+  display: block;
+}
+
+img.arrow_toogle{
+    -webkit-transition: -webkit-transform .5s linear; 
+    transition: -webkit-transform .5s linear; 
+    -o-transition: transform .5s linear; 
+    transition: transform .5s linear; 
+    transition: transform .5s linear, -webkit-transform .5s linear;
+}
+
+#all-groups-arrow:checked~label>span>img.arrow_toogle{
+    -webkit-transform: rotateX(180deg); 
+    transform: rotateX(180deg); 
+    -webkit-transition: -webkit-transform .5s linear; 
+    transition: -webkit-transform .5s linear; 
+    -o-transition: transform .5s linear; 
+    transition: transform .5s linear; 
+    transition: transform .5s linear, -webkit-transform .5s linear;
+}
+.group-stage .group-item .side-label{
+    margin-left: 50px;
+}
+
+.group-stage{
+    display: none;
+} 
+
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+    .checkboxes{
+        margin-left: 25px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .checkboxes{
+        margin-left: 10px;
+    }
+}
+@media screen and (min-width: 540px) and (max-width: 767px){
+    .filter{
+        margin-top: 5%;
+    }
+}
+@media screen and (min-width: 320px) and (max-width: 539px){
+    .filter{
+        margin-top: 5%;
+    }
+}

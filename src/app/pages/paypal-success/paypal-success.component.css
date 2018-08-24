@@ -1,0 +1,180 @@
+@font-face {
+  font-family: 'HelveticaNeueCyr-Roman';
+  src: url('../../../assets/fonts/HelveticaNeueCyr-Roman.otf');
+}
+@font-face {
+  font-family: 'HelveticaNeueCyr-Medium';
+  src: url('../../../assets/fonts/HelveticaNeueCyr-Medium.ttf');
+}
+
+body{
+  font-family: 'HelveticaNeueCyr-Roman';
+}
+table.main-header-1{
+  position: absolute;
+  top: 5%;
+  width: 95%;
+  display: table;
+  table-layout: fixed;
+  height: 0px;
+
+}
+td.main-header-2 {
+  font-family: 'HelveticaNeueCyr-Medium';
+  text-align: center;
+  vertical-align: middle;
+  font-size: 550%;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 0.26;
+  letter-spacing: normal;
+  color: rgba(1, 53, 1, 0.13);
+  display: table-cell;
+}
+.container-fluid.login-main{
+  margin: 0 auto;
+  background: url(../../../assets/images/image-compressor.png) no-repeat;
+  background-size: cover;
+  max-height: 1055px;
+  height: 100vh;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.paypal-success {
+  margin: 0 auto;
+  max-width: 570px;
+  width: 100%;
+  height: 314px;
+  background-color: rgba(33, 33, 33, 0.85);
+  position: relative;
+}
+
+article{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+h3{
+  font-family: HelveticaNeueCyr-Roman;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.61;
+  letter-spacing: -0.4px;
+  text-align: center;
+  color: #fdfdfd;
+}
+
+
+button{
+  font-family: 'HelveticaNeueCyr-Roman';
+  max-width: 215px;
+  width: 100%;
+  height: 43px;
+  border-radius: 0;
+  font-size: 18px;
+  line-height: 1.33;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  padding-right: 32px;
+  padding-top: 7px;
+  border: 1px solid  #00e575;
+  outline: none;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-around;
+}
+
+.make-bets{
+  background: url(../../../assets/images/arrow.png) no-repeat;
+  background-position:  95% 50%  ;
+}
+
+.buy-more{
+  background: url(../../../assets/images/arrow-left.png) no-repeat;
+  background-position:  5% 50%  ;
+}
+
+button a{
+  font-family: HelveticaNeueCyr-Roman;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  transition: all .2s;
+
+}
+button a:hover{
+  text-decoration: none;
+  transition: all .2s;
+  color: rgb(0, 229, 117);
+}
+
+
+
+
+@media only screen and (max-width: 532px) {
+  div.form-group.btn-change {
+    margin-top: -5px;
+  }
+  input[type=password]::-webkit-input-placeholder{
+    padding-top: 10px;
+  }
+}
+@media only screen and (max-width: 1167px) and (min-width: 800px)  {
+  td.main-header-2 {
+    font-size: 400%
+  }
+}
+
+@media only screen and (max-width: 849px) and (min-width: 593px)  {
+  td.main-header-2 {
+    font-size: 300%
+  }
+}
+@media only screen and (max-width: 637px) and (min-width: 400px)  {
+  td.main-header-2 {
+    font-size: 200%
+  }
+}
+
+@media only screen and (max-width: 450px)  {
+
+}
+
+@media only screen and (max-width: 426px)  {
+  td.main-header-2 {
+    font-size: 150%
+  }
+  .buttons{
+     display: flex;
+     flex-wrap: wrap;
+   }
+
+  .make-bets{
+    margin-top: 5px;
+  }
+}
+
+
+.head {
+  position: absolute;
+  visibility: hidden;
+}

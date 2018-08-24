@@ -1,0 +1,135 @@
+<ul class="nav " id="tabs" role="tablist" >
+  <li class="nav-item ">
+      <div class="tool_tip buy">
+        <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+        <div class="arrow-up buy"></div>
+        <span class="tooltiptext buy">{{'teams.tooltip_buy' | translate}}</span>
+      </div>
+    <a class="nav-link active show" id="purchases-ta2b" data-toggle="tab" href="#buy-team" role="tab" aria-controls="home" aria-selected="true" >
+      {{'teams.buy_team' | translate}}
+    </a>
+  </li>
+  <li class="nav-item ">
+    <div class="tool_tip sell">
+      <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+      <div class="arrow-up sell"></div>
+      <span class="tooltiptext sell">{{'teams.tooltip_sell' | translate}}</span>
+    </div>
+    <a class="nav-link" id="purchases-tab1" data-toggle="tab" href="#sell-team" role="tab" aria-controls="home" aria-selected="true" >
+      {{'teams.sell_team' | translate}}
+    </a>
+  </li>
+
+</ul>
+
+<div class="tab-content" id="firstTabContent">
+  <div class="tab-pane fade show active rules" id="buy-team" role="tabpanel" aria-labelledby="sell-team-tab">
+    <form (ngSubmit)="createBuyOffer(offerbuy, offer)"  [formGroup]="offerbuy" #offer="ngForm">
+      <div class="form-group">
+        <div class="sellect-box">
+          <div class="sellect-box-team">
+            <label class="sell-sellect-team"  for="sell-sel1ect" >{{'teams.select_team' | translate}}</label>
+            <select ngModel  name="team" class="form-control sell-sellect-team-list" id="sell-sel1ect" formControlName="team">
+              <option *ngFor="let team of teams" [ngValue]="team.name" >{{team.name}}</option>
+            </select>
+          </div>
+          <div class="sellect-box-count " >
+            <label class="sell-sellect-team count_of"  for="quantity">{{'teams.count' | translate}}</label>
+            <input 
+            class="form-control sellect-box-count-quantity d-block mx-auto" 
+            ngModel 
+            type="number" 
+            name="quantity" 
+            id="quantity" 
+            formControlName="count"
+            min="1">
+          </div>
+
+
+        </div>
+        <label class="price">{{'teams.price' | translate}}</label>
+        <input
+          type="number"
+          min="1"
+          class="sell-price d-block mx-auto"
+          ngModel
+          formControlName="price"
+          name="price">
+        <br>
+        <label class="sell-sellect-team" for="sell-user-email">USER EMAIL</label>
+        <input
+          type="email"
+          class="sell-user-email d-block mx-auto"
+          id="sell-user-email"
+          ngModel
+          formControlName="email"
+          name="email">
+        <br>
+        <button
+        style="    display: flex;
+        justify-content: center;"
+          type="submit"
+          class="btn btn-outline-success"
+          [disabled]="!offerbuy.valid"
+          >
+          {{'teams.buy' | translate}}</button>
+      </div>
+    </form>
+</div>
+  <div class="tab-pane fade  rules" id="sell-team" role="tabpanel" aria-labelledby="purchases-tab">
+    <form (ngSubmit)="createSellOffer(offersell)" [formGroup]="offersell">
+      <div class="form-group">
+        <div class="sellect-box">
+          <div class="sellect-box-team">
+            <label class="sell-sellect-team"  for="sell-sel1ect" >{{'teams.select_team' | translate}}</label>
+            <select ngModel  name="team" class="form-control sell-sellect-team-list  " id="sell-sel1ect" formControlName="team">
+              <option *ngFor="let team of teams" [ngValue]="team.name">{{team.name}}</option>
+            </select>
+          </div>
+          <div class="sellect-box-count">
+            <label class="sell-sellect-team count_of"  for="quantity">{{'teams.count' | translate}}</label>
+            <input 
+              class="form-control sellect-box-count-quantity d-block mx-auto" 
+              ngModel 
+              type="number" 
+              name="quantity" 
+              id="quantity"
+              min="1"
+              formControlName="count"
+              >
+          </div>
+
+
+        </div>
+        <label class="price">{{'teams.price' | translate}}</label>
+        <input
+          type="nubmer"
+          min="1"
+          class="sell-price d-block mx-auto"
+          ngModel
+          formControlName="price"
+          name="price">
+        <br>
+        <label class="sell-sellect-team" for="sell-user-email">USER EMAIL</label>
+        <input
+
+          type="email"
+          class="sell-user-email d-block mx-auto"
+          id="sell-user-email"
+          ngModel
+          formControlName="email"
+          name="email">
+        <br>
+        <button
+        style="    display: flex;
+        justify-content: center;"
+          type="submit"
+          class="btn btn-outline-success"
+          [disabled]="!offersell.valid"
+         >
+         {{'teams.sell' | translate}}</button>
+      </div>
+    </form>
+  </div>
+
+</div>

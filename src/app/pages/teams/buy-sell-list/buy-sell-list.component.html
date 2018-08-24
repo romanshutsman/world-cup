@@ -1,0 +1,178 @@
+<div class="buy-sell-list">
+  <ul class="nav " id="tabs" role="tablist">
+    <li class="nav-item">
+        <div class="tool_tip offer">
+          <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+          <div class="arrow-up offer"></div>
+          <span class="tooltiptext offer">{{'teams.tooltip_offer' | translate}}</span>
+        </div>
+      <a class="nav-link show active" id="buy-team-tab" data-toggle="tab" href="#offer-buy-team" role="tab" aria-controls="buy-team" aria-selected="false">
+        {{'teams.offer_buy' | translate}}
+      </a>
+    </li>
+    <li class="nav-item">
+      <div class="tool_tip teams">
+        <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+        <div class="arrow-up teams"></div>
+        <span class="tooltiptext teams">{{'teams.tooltip_my' | translate}}</span>
+      </div>
+      <a 
+      class="nav-link" 
+      id="sell-team-tab" 
+      data-toggle="tab" 
+      href="#my-teams" 
+      role="tab" 
+      aria-controls="sell-team" 
+      aria-selected="false"
+      (click)="myTeamList()"
+      >
+      {{'teams.my_buys' | translate}}
+      </a>
+    </li>
+    <li class="nav-item">
+      <div class="tool_tip sell">
+        <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+        <div class="arrow-up sell"></div>
+        <span class="tooltiptext sell">{{'teams.tooltip' | translate}}</span>
+      </div>
+      <a 
+      class="nav-link" 
+      id="my-sell-tab" 
+      data-toggle="tab" 
+      href="#my-sells" 
+      role="tab" 
+      aria-controls="sell-team" 
+      aria-selected="false"
+      (click)="mySellList()">
+      {{'teams.my_sells' | translate}}
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content" id="secondTabContent">
+    <div 
+    class="tab-pane fade active show rules" 
+    id="offer-buy-team" 
+    role="tabpanel" 
+    aria-labelledby="buy-team-tab">
+      <div  class=" loading" *ngIf="isLoadingOffer">
+        <div class="spinner ">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
+        </div>
+      </div>
+      <div *ngIf="!isLoadingOffer">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>{{'teams.my_teams' | translate}}</th>
+              <th>{{'teams.price' | translate}}</th>
+              <th>USER</th>
+              <th>{{'teams.action' | translate}}</th>
+              <th class="solution-tab">{{'teams.solution' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of data">
+              <td>{{d.team}} ({{d.quantity}})</td>
+              <td>{{d.price}} USD</td>
+              <td>{{d.offerFrom}}</td>
+              <td>{{d.action}}</td>
+              <td class="solution-content">
+                <form #sellect="ngForm">
+                  <select ngModel name="sellect" class="form-control solution-list" id="sell-sel1ect"  >
+                  <option>{{'teams.accept' | translate}}</option>
+                  <option>{{'teams.reject' | translate}}</option>
+                </select>
+                </form>
+                <button
+                  (click)="onSend(sellect,d._id, d )"
+                  type="submit"
+                  class="btn btn-outline-success">
+                  {{'teams.send' | translate}}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="nobody" *ngIf="data.length == 0">
+          {{'teams.no_offer' | translate}}
+        </p>
+      </div>
+    </div>
+    <div 
+    class="tab-pane fade rules" 
+    id="my-teams" 
+    role="tabpanel" 
+    aria-labelledby="sell-team-tab">
+      <div  class="loading" *ngIf="isLoadingTeams">
+        <div class="spinner  ">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
+        </div>
+      </div>
+      <div *ngIf="!isLoadingTeams">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>{{'teams.my_teams' | translate}}</th>
+              <th>{{'teams.price' | translate}}</th>
+              <th>USER</th>
+              <th>{{'teams.solution' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of teamList">
+              <td>{{d.team}} ({{d.quantity}})</td>
+              <td>{{d.price}} USD</td>
+              <td>{{d.offerTo}}</td>
+              <td>{{d.status}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="nobody" *ngIf="teamList.length == 0">
+          {{'teams.no_buy' | translate}}
+        </p>
+      </div>
+    </div>
+    <div class="tab-pane fade rules" id="my-sells" role="tabpanel" aria-labelledby="sell-team-tab">
+        <div  class=" loading" *ngIf="isLoadingSell">
+          <div class="spinner ">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+          </div>
+        </div>
+        <div *ngIf="!isLoadingSell">
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>{{'teams.my_teams' | translate}}</th>
+              <th>{{'teams.price' | translate}}</th>
+              <th>USER</th>
+              <th>{{'teams.solution' | translate}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let d of sellList">
+              <td>{{d.team}} ({{d.quantity}})</td>
+              <td>{{d.price}} USD</td>
+              <td>{{d.offerTo}}</td>
+              <td>{{d.status}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <p class="nobody" *ngIf="sellList.length == 0">
+            {{'teams.no_sell' | translate}}
+          </p>
+        </div>
+    </div>
+  </div>
+</div>

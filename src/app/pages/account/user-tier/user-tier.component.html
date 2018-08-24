@@ -1,0 +1,139 @@
+
+<div
+  class=" show fade">
+  <div>
+    <ul class="nav nav-tab mb-3" id="pills-tab2" role="tablist">
+      <li class="nav-item col-md-4 userTiers_tabs">
+        <div class="tool_tip create_tier">
+          <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+          <div class="arrow-up create_tier"></div>
+          <span class="tooltiptext create_tier">{{'account.create_tier_tool' | translate}}</span>
+        </div>
+        <a class="nav-link"
+           id="createTier-tab"
+           data-toggle="pill"
+           href="#createTier"
+           role="tab"
+           aria-controls="createTier"
+           aria-expanded="true"
+           [routerLink]="['create']"
+           [routerLinkActive]="['active']">{{'account.create_tier' | translate}}
+        </a>
+      </li>
+      <li class="nav-item col-md-4 userTiers_tabs">
+        <div class="tool_tip my_tier">
+          <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+          <div class="arrow-up my_tier"></div>
+          <span class="tooltiptext my_tier">{{'account.my_tiers_tool' | translate}}</span>
+        </div>
+        <a class="nav-link"
+           id="myTiers-tab"
+           data-toggle="pill"
+           href="#myTiers"
+           role="tab"
+           aria-controls="myTiers"
+           (click)="getUserTiers();"
+           aria-expanded="true"
+           [routerLink]="['my-tiers']"
+           [routerLinkActive]="['active']">{{'account.my_tiers' | translate}}
+           <span *ngIf="unreadTiers.length != 0" class="notification-counter-1"></span>
+        </a>
+      </li>
+      <li class="nav-item col-md-4 userTiers_tabs">
+        <div class="tool_tip invite">
+          <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+          <div class="arrow-up invite"></div>
+          <span class="tooltiptext invite">{{'account.invitation_tool' | translate}}</span>
+        </div>
+        <a class="nav-link"
+           id="invitation-tab"
+           data-toggle="pill"
+           href="#invitation"
+           role="tab"
+           aria-controls="invitation"
+           (click)="getInvitation()"
+           aria-expanded="true"
+           [routerLink]="['invitation']"
+           [routerLinkActive]="['active']">{{'account.invitation' | translate}}
+           <span *ngIf="unreadInvitation.length != 0" class="notification-counter-2"></span>
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent2">
+
+      <div  class="tab-pane fade show active none"
+           id="createTier"
+           role="tabpane2"
+           aria-labelledby="createTier"
+           aria-expanded="true">
+        <form (ngSubmit)="createTier(createTierForm)" #createTierForm="ngForm">
+          <div class="form-group">
+            <label class="mt-50" for="tierName">{{'account.tier_name' | translate}}</label>
+            <input
+              type="text"
+              class="form-control"
+              id="tierName"
+              name="tierName"
+              ngModel
+              autocomplete="off"
+              maxlength="30"
+              required>
+          </div>
+          <div class="form-group price">
+            <label for="price">PRICE</label>
+            <input
+              type="number"
+              class="form-control"
+              id="price"
+              name="price"
+              ngModel
+              autocomplete="off"
+              required>
+          </div>
+          <div class="form-group prize">
+            <label for="prize">PRIZE</label>
+            <input
+              type="number"
+              class="form-control"
+              name="prize"
+              ngModel
+              id="prize"
+              required>
+          </div>
+          <label for="invite">{{'account.invite' | translate}}</label>
+          <div class="inviteUser">
+            <tag-input
+              [ngModel]="emails"
+              [theme]="'foundation-theme'"
+              name="items"
+              [validators]="validators"
+              [errorMessages]="errorMessages"
+              [separatorKeyCodes]="[32]"
+              [inputClass]='["foundation-theme"]'
+              placeholder="{{'account.add_friend' | translate}}"
+              secondaryPlaceholder="{{'account.add_friend' | translate}}"
+              id="invite"></tag-input>
+          </div>
+          <div class="form-group">
+            <label for="stage">STAGE</label>
+            <select
+              class="form-control"
+              name="stage"
+              ngModel
+              id="stage"
+              required>
+              <option *ngFor="let stage of stages" [value]="stage">{{ stage }}</option>
+            </select>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-outline-success"
+            [disabled]="!createTierForm.valid">{{'account.create' | translate}}
+          </button>
+        </form>
+      </div>
+
+<router-outlet  ></router-outlet>
+    </div>
+  </div>
+</div>

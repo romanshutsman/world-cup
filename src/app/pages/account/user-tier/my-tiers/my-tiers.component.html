@@ -1,0 +1,126 @@
+<div class="tab-pane fade show active"
+     role="tabpane2"
+     id="myTiers"
+     aria-labelledby="myTiers-tab"
+     aria-expanded="true">
+  <div  class="scroll-box loading" *ngIf="isLoading">
+    <div class="spinner  ">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+  <div class="scroll-box" *ngIf="!isLoading">
+    <div class="myTiers">
+      <div *ngFor="let tier of myTiers, let i = index"
+           role="button">
+        <div class="singleTier"
+             (click)="dropDown(tier, i)"
+             [ngClass]="tier.activate ? 'activeTier' : ''">{{tier.name}}
+        </div>
+        <div class="tierEdit" *ngIf="showEdit == tier._id && tier.activate" [@enterAnimation]>
+            <input 
+            type="text" 
+            [class.editDisable]="readonly" 
+            class="edit" 
+            [readonly]="readonly" 
+            value="{{tier.name}}"
+            maxlength="25"
+            [ngModel]="tier.name"
+            #editTier="ngModel">
+            <button class="btn btn-outline-success edit" *ngIf="readonly" (click)="edit(tier)">EDIT</button>
+            <button class="btn btn-outline-success edit" *ngIf="!readonly" (click)="save(tier, editTier)">SAVE</button>
+            <button class="btn btn-outline-success edit" (click)="delete(tier)">DELETE</button>
+          </div>  
+        <div *ngIf="tier.invitations.length > 0"
+             [ngClass]="tier.activate ? 'showDropdown' : 'hideDropdown'"
+             [ngStyle]="{'height': tier.activate  ?
+                                tier.invitations.length * 44 + inputTagHeight + 'px' : 0}"
+              [class.contentEmail]="tier.activate && !errorEmail   || (!key && matchEmail || matchEmail) && tier._id== tierID || tier.activate && tier._id== tierID">
+          <div *ngFor="let user of tier.invitations"
+               class="tierUsers">
+            <p class="email">{{ user.to }}</p>
+            <p class="status"
+               [class.accepted]="user.status === 'accept'"
+               [class.rejected]="user.status === 'reject'"
+               [class.pend]="user.status === 'pending'"
+            >{{ user.status }} </p>
+            <p  *ngIf="user.status == 'reject'"
+                (click)="resendInvitaion(user, tier)"
+
+                class="resend">Resend</p>
+          </div>
+          <div  class="tierUsers inputTag" #inputTag>
+              <tag-input
+              [validators]="validators"
+                (keyup)="tChange($event, tier)"
+                (keydown)="Space($event)"
+                (keyup)="invite(inviteMore[i], tier)"
+                [(ngModel)]="inviteMore[i]"
+                (onTextChange)="checkHight(i)"
+                [theme]="'foundation-theme'"
+                [inputClass]='["foundation-theme"]'
+                placeholder="{{'account.add_friend' | translate}}"
+                secondaryPlaceholder="{{'account.add_friend' | translate}}">
+                <button
+                  [disabled]="!key && matchEmail || matchEmail  || tier._id == tierID ? !disableButton : true"
+                  [class.disable]="!key && matchEmail || matchEmail  || tier._id == tierID"
+                  (click)="addMoreFriends(inviteMore[i], tier, inputTag)"
+                  class="btn btn-outline-success"
+                  id="addButton">Add
+                </button>
+              </tag-input>
+          </div>
+          <div class="tierUsers bg-danger-color" *ngIf="!errorEmail && tier._id == tierID" [@enterAnimation]>
+              <p style="display: block; " class="errorEmail ">
+                  {{'account.valid_email' | translate}}
+              </p>
+          </div>
+          <div class="tierUsers bg-danger-color"  *ngIf="(!key && matchEmail || matchEmail) && tier._id== tierID" [@enterAnimation]>
+              <span 
+              [class.errorExistTrans]="(!key && matchEmail || matchEmail) && tier._id== tierID"  >
+              {{'account.exist_email' | translate}}
+              </span>
+          </div>
+        </div>
+        <div *ngIf="tier.invitations.length == 0"
+             [ngClass]="tier.activate ? 'showDropdown' : 'hideDropdown'"
+             [ngStyle]="{'height': tier.activate ? 100 +'px' : 0}"
+             [class.contentEmail]="tier.activate && !errorEmail || tier.activate && tier._id== tierID"
+             class="no-invites-block">
+          <p class="no-invites">You haven`t any invited users yet !</p>
+          <div class="tierUsers inputTag" #inputTag>
+            <tag-input
+            (keyup)="tChange($event, tier)"
+              [(ngModel)]="inviteMore[i]"
+              (onTextChange)="checkHight(i)"
+              (keyup)="invite(inviteMore[i], tier)"
+              [theme]="'foundation-theme'"
+              [validators]="validators"
+              [separatorKeyCodes]="[32]"
+              [inputClass]='["foundation-theme"]'
+              placeholder="{{'account.add_friend' | translate}}"
+              secondaryPlaceholder="{{'account.add_friend' | translate}}">
+              <button
+              [disabled]="tier._id == tierID ? !disableButton : true"
+                (click)="addMoreFriends(inviteMore[i], tier, inputTag)"
+                class="btn btn-outline-success"
+                id="addButton">Add
+              </button>
+            </tag-input>
+          </div>
+          <div class="tierUsers bg-danger-color" *ngIf="!errorEmail && tier._id == tierID" [@enterAnimation]>
+              <p style="display: block; " class="errorEmail ">
+                  {{'account.valid_email' | translate}}
+              </p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="myTiers.length == 0">
+        <h3 style="text-align:  center;color:  white;font-family: HelveticaNeueCyr-Roman; font-size: 20px;">{{'desktop.havent_tier' | translate}}</h3>
+      </div>
+    </div>
+  </div>
+</div>

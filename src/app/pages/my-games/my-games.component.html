@@ -1,0 +1,321 @@
+<div class="container-fluid">
+  <app-header-notification></app-header-notification>
+  <div class="wrap_menu">
+    <app-menu></app-menu>
+  </div>
+  <div class="container" style="padding-bottom: 30px;">
+    <div *ngIf="authenticated && isloading" class="row  loading">
+      <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </div>
+    <div class="row" *ngIf="!isloading">
+      <div class="col-md-3">
+        <button *ngIf="togBtn" class="createNewTier" (click)="goToAccount();">{{'desktop.create_tier' | translate}}</button>
+        <div class="filter" [class.togBtn]="!togBtn">
+          <div class="filter-header">
+            <img src="../../../assets/images/filter.png" alt="filter">
+            <p>{{'my_bets.filter' | translate}}</p>
+            <div class="tool_tip filter_bet">
+              <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+              <div class="arrow-up filter_bet"></div>
+              <span class="tooltiptext filter_bet">{{'my_bets.tooltip_filter' | translate}}</span>
+            </div>
+          </div>
+          <p class="head">{{'my_bets.games' | translate}}</p>
+          <div class="checkboxes">
+            <div class="groups">
+              <section class="all-groups-stage">
+                <input
+                  id="all-groups"
+                  [disabled]='disableCheckboxAll'
+                  [(ngModel)]="selectedAll"
+                  (change)="selectAll();"
+                  type="checkbox">
+                <label
+                [class.inactive]="disableCheckboxAll"
+                  for="all-groups"
+                  class="side-label"
+                  >
+                </label>
+                <input type="checkbox" name="" id="all-groups-arrow">
+                <label
+                  (click)="show();"
+                  class="arr_tog"
+                  for="all-groups-arrow"
+                  [class.someClass]="disableCheckboxAll">
+                    <span class="arrow" [class.inactiveDrop]="disableCheckboxAll">{{'my_bets.groups' | translate}}
+                      <img
+                        [class.inactiveDropImage]="disableCheckboxAll"
+                        class="arrow_toogle"
+                        src="../../../assets/images/arroow_down.png"
+                        alt="drop">
+                    </span>
+                </label>
+              </section>
+              <div class="group-stage">
+                <div *ngFor="let n of group_stage" class="group-item {{n.class}}">
+                  <input
+                    [disabled]='disableCheckboxAll'
+                    type="checkbox"
+                    class="groups_"
+                    [(ngModel)]="n.selected"
+                    (change)="checkGroup($event, n , n.nameGroup)"
+                    name="group"
+                    value="{{n.name}}"
+                    id={{n.id}}>
+                  <label
+
+                  [class.inactive]="disableCheckboxAll"
+                  [class.someClass]="disableCheckboxAll"
+                    for={{n.id}}
+                    class="side-label">{{n.name}}
+                  </label>
+                </div>
+              </div>
+              <div class="play-off">
+                <div *ngFor="let n of play_off, let i = index" class="group-item {{n.class}}">
+                  <input
+                    type="checkbox"
+                    [disabled]='disableCheckbox[i]'
+                    title="Hello"
+                    [(ngModel)]="n.selected"
+                    (change)="checkGroup($event, n , n.nameGroup); playoff() "
+                    [value]="n.name"
+                    id={{n.id}}>
+                  <label
+                    for={{n.id}}
+                    data-toggle="tooltip"
+                    data-placement="right"
+                    class="side-label"
+                    [class.someClass]="disableCheckbox[i]">
+                    {{n.name}}
+                  </label>
+                  <div class="{{dataAttr}} playoff"><span></span>
+                    <p> {{'games.dont_have' | translate}}</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="menu-bought-ticket">
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner " id="carousel_inner">
+              <div class="carousel-item " *ngFor="let t of allTier, let i = index"
+                   [ngClass]="i == 0 ? 'carousel-item active' : 'carousel-item'">
+                <div class="item" *ngFor="let tier of t, let j = index">
+                  <div class="dropdown" (click)="showDrop('.dropdown')">
+                    <button class="btn btn-secondary dropdown-toggle"
+                            type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            (click)="showTier(tier.tier['_id']);"
+                            [ngClass]="{'tierid': selectedTier == tier.tier['_id']}">
+                            <span *ngIf="!togBtn">
+                              {{'my_bets.tier' | translate}} {{tier.tier.price}}$ ({{tier.count}})
+                            </span>
+                            <span *ngIf="togBtn" class="userTier">
+                              <span class="userTierHiden">{{tier.tier.name}}</span> ({{tier.count}})
+                              <div class="tool_tip_userTier">
+                                <div class="arrow-up"></div>
+                                <span class="tooltiptext">
+                                  <span class="tooltiptext_name">{{'my_bets.tier' | translate}}: {{tier.tier.name}}</span>
+                                  <br>
+                                  <span class="tooltiptext_owner">{{tier.tier.owner}}</span>
+                                </span>
+                              </div>
+                            </span>
+                    </button>
+                    <div class="dropdown-menu scrollbar" [ngClass]="t.length>3 ? 'scrollbar-drop' : ''"
+                         aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item " *ngFor="let ticket of tier.ticketsId, let i = index"
+                         (click)="getTicket(tier.tier['_id'], ticket ); showTicket(ticket)"
+                         [ngClass]="{'activeItem': selectedIndex == ticket}">{{'my_bets.ticket' | translate}} {{i + 1}}</a>
+                    </div>
+                  </div>
+                  <p id="alert" class="text-center">
+                  </p>
+                </div>
+              </div>
+              <a class="carousel-control-prev" *ngIf="allTier.length>1" href="#carouselExampleIndicators" role="button"
+                 data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" *ngIf="allTier.length>1" href="#carouselExampleIndicators" role="button"
+                 data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+          <div [ngStyle]="{ position: 'relative' }" class="games_completed">
+            <div class="progress-bar" [ngStyle]="{width: getWidth()}"></div>
+            <p>{{percent_completed}} % {{'my_bets.games_compl' | translate}}</p>
+          </div>
+          <div class="tickets  loading" *ngIf="isLoadingGroup">
+            <div class="spinner  ">
+              <div class="rect1"></div>
+              <div class="rect2"></div>
+              <div class="rect3"></div>
+              <div class="rect4"></div>
+              <div class="rect5"></div>
+            </div>
+          </div>
+          <div *ngIf="!isLoadingGroup">
+            <div class="tickets" *ngFor="let key of betskeys">
+              <div *ngIf="betskeys" class="row wrap">
+                <div class="col-md-2 match_day">
+                  <div *ngIf="bets[key]" class="date">
+                    <p class="week_day">{{bets[key][0].match.formatted_date | date: "EEEE"}}, </p>
+                    <p class="month">{{bets[key][0].match.formatted_date | date: "MMMM"}}
+                      {{bets[key][0].match.formatted_date | date: "d"}}</p>
+                  </div>
+                  <div class="tool_tip match">
+                    <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+                    <div class="arrow-up match"></div>
+                    <span class="tooltiptext match">{{'my_bets.tooltip_bet' | translate}}</span>
+                  </div>
+                </div>
+                <div class="col-md-10">
+                  <div *ngFor="let bet of bets[key], let i = index">
+                    <div [style.display]="bet.displayShow">
+                      <a (click)="bet.toggle = !bet.toggle" class="bought" role="button">
+                        <div class="matches">
+                          <div class="match_begin">
+                            <p>{{bet.match.formatted_date | date: 'H:mm'}}</p>
+                          </div>
+                          <div class="team_home">
+                            <img [src]="bet.match.localteam_img" alt="flag">
+                            <p>{{bet.bet.localteam_name}}</p>
+                          </div>
+                          <div class="team_away">
+                            <p>{{bet.match.visitorteam_name}}</p>
+                            <img [src]="bet.match.visitorteam_img" alt="flag">
+                          </div>
+                          <div class="toggle">
+                            <img class="arrow-down" [class.activeArrow]="isActive(!bet.toggle)"
+                                 src="../../../assets/images/arroow_down.png" alt="toggle">
+                          </div>
+                        </div>
+                        <div [ngClass]="bet.toggle ? 'showDropdown' : 'hideDropdown'"
+                             class="hide">
+                          <div>
+                            <div class="details_match">
+                              <div class="score_match match_info score">
+                                <p>
+                                  <span *ngIf="bet.match.status" [ngClass]="bet.match.status !== '' ? (bet.match.status === ('FT' || 'AET' || 'Pen.')
+                                  && bet.match.localteam_score == bet.bet.localteam_score ? 'green' : 'red') : 'green'">
+                                    {{bet.bet.localteam_score}}</span>
+                                  <span *ngIf="!bet.match.status" >
+                                    {{bet.bet.localteam_score}}</span>
+                                </p>
+                                <p>
+                                  <span *ngIf="bet.match.status" [ngClass]="bet.match.status !== '' ? (bet.match.status === ('FT' || 'AET' || 'Pen.')
+                                   && bet.match.visitorteam_score == bet.bet.visitorteam_score ? 'green' : 'red') : 'green'">
+                                    {{bet.bet.visitorteam_score}}</span>
+                                  <span *ngIf="!bet.match.status">
+                                    {{bet.bet.visitorteam_score}}</span>
+                                </p>
+                              </div>
+                              <div *ngIf="bet.match.status === ('FT' || 'AET' || 'Pen.')"
+                                   class="score_match match_info score match_ft">
+                                <span class="match_ft_result">{{'my_bets.result' | translate}}:</span>
+                                <p>
+                                  <span>{{bet.match.localteam_score}}</span>
+                                </p>
+                                <p>
+                                  <span>{{bet.match.visitorteam_score}}</span>
+                                </p>
+                              </div>
+                              <div class="first_goal match_info">
+                                <span></span>
+                                <p>{{'my_bets.first_goal' | translate}}:
+                                  <span
+                                    *ngIf="bet.match.events[0]"
+                                    [ngClass]="(bet.match.status === ('FT' || 'AET' || 'Pen.') &&
+                                    bet.match.events[0].player == bet.bet.first_goal) ? 'green' : 'red'">
+                                    {{bet.bet.first_goal}}</span>
+                                  <span
+                                    *ngIf="!bet.match.events[0]">
+                                    {{bet.bet.first_goal}}</span>
+                                </p>
+                              </div>
+                              <div *ngIf="bet.match.status === ('FT' || 'AET' || 'Pen.') && bet.match.timer == ''"
+                                   class="first_goal match_info match_ft">
+                                <span class="match_ft_result">{{'my_bets.result' | translate}}:</span>
+                                <p>{{'my_bets.first_goal' | translate}}: <span *ngIf="bet.match.events[0]">{{bet.match.events[0].player}}</span>
+                                </p>
+                              </div>
+                              <div *ngIf="bet.match.status != ('HT' && 'FT') && bet.match.timer  === ''"
+                                   class="match_complete match_info">
+                                <p>{{'my_bets.match_not_start' | translate}} !</p>
+                              </div>
+                              <div *ngIf="bet.match.status == 'HT'"
+                                   class="match_complete match_info"
+                                   style="justify-content: space-around;">
+                                <p>{{bet.match.localteam_score}}</p>
+                                <p>Half time</p>
+                                <p>{{bet.match.localteam_score}}</p>
+                              </div>
+                              <div *ngIf="bet.match.timer !== ''"
+                                   class="match_complete match_info"
+                                   style="justify-content: space-around;">
+                                <p>{{ bet.match.timer }}</p>
+                                <p>{{bet.match.localteam_score}}</p>
+                                <p>
+                                  <span *ngIf="bet.match.timer != '' ">{{bet.match.timer}} 
+                                    <span *ngIf="bet.match.events.extra_min != ''">
+                                      +{{bet.match.events.extra_min}}
+                                    </span> min
+                                  </span> 
+                                  <span style="color:red;     font-style: italic;">Live</span>
+                                </p>
+                                <p>{{bet.match.visitorteam_score}}</p>
+                              </div>
+                              <div *ngIf="bet.match.status !== ('FT' || 'AET' || 'Pen.')"
+                                   class="hours_round match_info">
+                                <p *ngIf="bet.closeRoundDays > 0">{{ bet.closeRoundDays }} {{'my_bets.days' | translate}}</p>
+                                <p *ngIf="bet.closeRoundHours >= 2">
+                                  &nbsp;{{ bet.closeRoundHours }} {{'my_bets.hours' | translate}}
+                                </p>
+                                <p *ngIf="bet.closeRoundMinutes > 0 && bet.closeRoundHours >= 2">
+                                  &nbsp;{{ bet.closeRoundMinutes }} {{'my_bets.to_close' | translate}}
+                                </p>
+                                <p
+                                  *ngIf="bet.closeRoundDays <= 0 && bet.closeRoundHours < 2">
+                                  {{'my_bets.closed' | translate}}
+                                </p>
+                                <!-- <p
+                                  *ngIf="bet.closeRoundHours < 0 && bet.closeRoundDays < 0 && bet.closeRoundMinutes < 0 && bet.closeRoundDays < 0">
+                                  {{'my_bets.closed' | translate}}
+                                </p> -->
+                              </div>
+                              <div class="rank_place">
+                                <span
+                                  *ngIf="rankings[bet.match.id]">{{'my_bets.earn' | translate}} {{ rankings[bet.match.id] }} {{'my_bets.points' | translate}}</span>
+                                <span *ngIf="!rankings[bet.match.id]">{{'my_bets.earn' | translate}} 0 {{'my_bets.points' | translate}}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="redirect" class="no-bets">
+            <p>{{'my_bets.havnt_bet' | translate}} <a routerLink="/games">{{'my_bets.make' | translate}}</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

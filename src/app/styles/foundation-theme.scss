@@ -1,0 +1,79 @@
+@import '../../../node_modules/ngx-chips/core/styles/core/_core.scss';
+
+$foundation-primary: #fff;
+$foundation-primary-dark: darken($foundation-primary, 10%);
+$height: 25px;
+$inputColor: #fff;
+
+// this is the container's theme
+$foundation-theme: (
+  container-border-bottom: unset,
+  container-border-bottom-focused: unset,
+  container-border-bottom-invalid: unset
+);
+
+// this is the tag's theme
+$foundation-tag-theme: (
+  background: $foundation-primary,
+  background-focused: $foundation-primary-dark,
+  background-active: $foundation-primary-dark,
+  background-hover: $foundation-primary-dark,
+  color: #000,
+  color-hover: #000,
+  border-radius: 0,
+  box-shadow: unset,
+  height: $height,
+  line-height: 25px,
+  font-size: .8em
+);
+
+// this is the delete icon's theme
+$foundation-icon-theme: (
+  fill: #000,
+  height: 20px,
+  fill-focus: #eee,
+  transition: all 0.35s
+);
+
+// apply theme to the container
+::ng-deep .ng2-tag-input.foundation-theme {
+  @include tag-input-theme($foundation-theme);
+  border: none !important;
+}
+
+// apply theme to the tags
+::ng-deep .ng2-tag-input.foundation-theme tag {
+  @include tag-theme($foundation-tag-theme);
+}
+
+// apply theme to the delete icon
+::ng-deep .ng2-tag-input.foundation-theme tag delete-icon {
+  @include icon-theme($foundation-icon-theme);
+  svg {
+    height: $height;
+  }
+  &:hover {
+    transform: scale(1.2) translateY(-3px);
+  }
+}
+
+//input styles
+::ng-deep .ng2-tag-input__text-input.foundation-theme{
+  background: #181818;
+  width: 339px;
+  &.ng-dirty, &ng-touched {
+    color: $inputColor;
+  }
+  &:focus {
+    color: $inputColor;
+  }
+  &::placeholder {
+    color: darken ($inputColor, 30%);
+  }
+}
+
+
+.tierUsers ::ng-deep .ng2-tag-input__text-input.foundation-theme{
+  background: rgb(39, 39, 39);
+  // width: unset;
+}

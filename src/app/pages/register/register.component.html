@@ -1,0 +1,69 @@
+<section class="container-fluid login-main">
+  <app-header-notification></app-header-notification>
+    <div class="gradient">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <app-menu></app-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container new-acc">
+      <div class="row">
+        <article class="create-new-account">
+          <p class="create-header" [ngStyle]="errorMessage && {'padding-bottom': '35px'}">{{'register.register' | translate}}</p>
+          <div>
+            <p class="error-message" *ngIf="errorMessage">{{errorMessage}}</p>
+            <p class="error-message" *ngIf="(!name.valid && (name.dirty || name.touched))">Please, enter valid username</p>
+            <p class="error-message" *ngIf="(!passwords.valid && (repeatPassword.dirty || repeatPassword.touched)) || (!email.valid && (email.dirty || email.touched))">Your credentials are incorrect</p>
+            <p class="error-message" *ngIf="(!password.valid && (password.dirty || password.touched))">Password should be least 8 and not more 16 characters</p>
+          </div>
+          <form
+            [formGroup]="registerForm"
+            (ngSubmit)="register(registerForm.value)">
+            <div
+              class="form-group user"
+              [ngClass]="{'has-error': (!name.valid && (name.dirty || name.touched))}" >
+              <div class="tool_tip user">
+                <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+                <div class="arrow-up user"></div>
+                <span class="tooltiptext user">{{'register.tooltip' | translate}} <br>{{'register.ex' | translate}}: <span>John_Doe</span></span>
+              </div>
+              <input
+                type="text"
+                maxlength="20"
+                [formControl]="name"
+                class="form-control"
+                id="username"
+                required
+                name="name"
+                placeholder="Username"
+                [class.errorPadding]="errorMessage"
+                autocomplete="name">
+            </div>
+            <div class="form-group" [ngClass]="{'has-error': (!email.valid && (email.dirty || email.touched))}">
+              <input type="email" class="form-control" id="email" required placeholder="Email" [formControl]="email" autocomplete="email">
+            </div>
+            <div class="form-group" [ngClass]="{'has-error': (!password.valid && (password.dirty || password.touched))}">
+              <input type="password" class="form-control" required id="password" placeholder="Password" [formControl]="password" autocomplete="off">
+            </div>
+            <div class="form-group" [ngClass]="{'has-error': (!passwords.valid && (repeatPassword.dirty || repeatPassword.touched))}">
+              <input type="password" class="form-control" required id="repeatpassword" placeholder="{{'register.confirm' | translate}}" [formControl]="repeatPassword" autocomplete="off">
+            </div>
+            <!-- <div class="input-check">
+              <input type="checkbox" id="checkBox01" [formControl]="accept"/>
+              <label for="checkBox01">{{'register.check' | translate}}</label>
+            </div> -->
+            <div class="form-group btn-register" style="margin-top: 8%;">
+              <button type="submit" class="btn btn-outline-success" [class.isactive]="registerForm.valid" [disabled]="!registerForm.valid">{{'register.reg_now' | translate}}</button>
+            </div>
+          </form>
+          <p class="terms">
+            {{'register.terms' | translate}}<a routerLink="/rules"> {{'register.here' | translate}}</a>.
+          </p>
+        </article>
+      </div>
+    </div>
+</section>
+

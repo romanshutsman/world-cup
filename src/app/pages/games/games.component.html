@@ -1,0 +1,335 @@
+<div class="container-fluid">
+  <app-header-notification></app-header-notification>
+  <div class="wrap_menu">
+    <app-menu></app-menu>
+  </div>
+  <div class="container" >
+    <div class="row loading"  *ngIf="authenticated && isloading">
+      <div class="spinner ">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+    </div>
+    <div class="row" *ngIf="!isloading">
+      <div class="col-md-3">
+        <div class="filter">
+          <div class="filter-header">
+            <img src="../../../assets/images/filter.png" alt="filter">
+            <p>{{'games.filter' | translate}}</p>
+            <div class="tool_tip">
+              <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+              <div class="arrow-up"></div>
+              <span class="tooltiptext">{{'games.tooltip_filter' | translate}}</span>
+            </div>
+          </div>
+          <p class="head bets">{{'games.activity' | translate}}</p>
+          <div class="checkboxes bets">
+            <div class="groups">
+              <div class="group-item ">
+                <input
+                  [disabled]='check == 0 || (checkUser == 0 && togTier) '
+                  type="checkbox"
+                  id='my_bet'
+                  name="my_bet"
+                  [checked]="myBet"
+                  (click)="myBetCheck();betsFilter();">
+                <label  for='my_bet' 
+                        [class.inactive]="check == 0 
+                        || (checkUser == 0 && togTier) " 
+                        class="side-label">{{'games.bet' | translate}}</label>
+              </div>
+              <div class="group-item ">
+                <input
+                  [disabled]='check == 0 || (checkUser == 0 && togTier) '
+                  type="checkbox"
+                  id='unfill'
+                  name="unfill"
+                  [checked]="unfillBet"
+                  (click)="unfillBetCheck();betsFilter()">
+                <label for='unfill' 
+                [class.inactive]="check == 0 
+                || (checkUser == 0 && togTier) "  
+                class="side-label">{{'games.unfill' | translate}}</label>
+              </div>
+            </div>
+          </div>
+          <p class="head">{{'my_bets.games' | translate}}</p>
+          <div class="checkboxes">
+            <div class="groups">
+              <section class="all-groups-stage" *ngFor="let all of allBets">
+                <input
+                  [disabled]='check == 0  || (checkUser == 0 && togTier) || (checkGroup && togTier) '
+                  id="all-groups"
+                  [(ngModel)]="selectedAll"
+                  [value]="all.value"
+                  type="checkbox"
+                  (change)="checkedAllGroups();betsFilter();">
+                <label for="all-groups" 
+                [class.inactive]="check == 0  
+                || (checkUser == 0 && togTier)  
+                || (checkGroup && togTier)"   
+                class="side-label"></label>
+                <div (click)="show(); arrow = !arrow" 
+                class="arr_tog" for="all-groups-arrow">
+                  <span class="arrow" 
+                  [class.inactiveDrop]="check == 0  
+                  || (checkUser == 0 && togTier)  
+                  || (checkGroup && togTier)" >{{'games.groups' | translate}}
+                    <img
+                      class="arrow_toogle"
+                      [class.rotate]="arrow"
+                      [class.inactiveDropImage]="check == 0   || (checkUser == 0 && togTier) || (checkGroup && togTier)"
+                      src="../../../assets/images/arroow_down.png"
+                      alt="dropdown">
+                  </span>
+                </div>
+              </section>
+              <div class="group-stage">
+                <div *ngFor="let n of group_stage" class="group-item {{n.class}}">
+                  <input
+                    [disabled]='check == 0  || (checkUser == 0 && togTier) || (checkGroup && togTier)'
+                    type="checkbox"
+                    [(ngModel)]="n.selected"
+                    (change)="groupsSelected();betsFilter();"
+                    name="group"
+                    value="{{n.value}}"
+                    id={{n.id}}>
+                  <label for={{n.id}} [class.inactive]="check == 0   || (checkUser == 0 && togTier)  || (checkGroup && togTier)"  class="side-label">{{n.name}}</label>
+                </div>
+              </div>
+              <div class="play-off">
+                <div *ngFor="let n of play_off, let i = index" class="group-item {{n.class}}">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="n.selected"
+                    [disabled]='disableCheckbox[i] || (checkUser == 0 && togTier)'
+                    title="Hello"
+                    (change)="betsFilter()"
+                    [value]="n.name"
+                    id={{n.id}}>
+                  <label  for={{n.id}}
+                          data-toggle="tooltip"
+                          data-placement="right"
+                          class="side-label"
+                          [class.someClass]="disableCheckbox[i] || (checkUser == 0 && togTier)">{{n.name}}</label>
+                  <div class="{{dataAttr}} playoff">
+                    <p>{{'games.this_match' | translate}} <br>{{'games.yet' | translate}} !</p>
+
+                  </div>
+                </div>
+                <div class="reset">
+                  <button
+                    type="button"
+                    [disabled]='check == 0 '
+                    class="btn btn-outline-success"
+                    (click)="reset()">{{'games.clear' | translate}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="menu-bought-ticket" >
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="false">
+            <div class="carousel-inner " id="carousel_inner" style="height: 100%">
+              <div class="carousel-item "
+                   *ngFor="let t of allTier, let i = index"
+                   [ngClass]="i == 0 ? 'carousel-item active' : 'carousel-item'">
+                <div class="item" *ngFor="let tier of t, let j = index">
+                  <div class="dropdown" (click)="showDrop('.dropdown')">
+                    <button
+                      class="btn btn-secondary dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      (click)="showTier(tier.tier['_id']);"
+                      [ngClass]="{'tierid': selectedTier == tier.tier['_id']}">
+                        <span *ngIf="!togTier">
+                          {{'my_bets.tier' | translate}} {{tier.tier.price}}$ ({{tier.count}})
+                        </span>
+                        <span *ngIf="togTier" class="userTier">
+                          <span class="userTierHiden">{{tier.tier.name}}</span> ({{tier.count}})
+                          <div class="tool_tip_userTier">
+                            <div class="arrow-up"></div>
+                            <span class="tooltiptext">
+                              <span class="tooltiptext_name">{{'my_bets.tier' | translate}}: {{tier.tier.name}}</span>
+                              <br>
+                              <span class="tooltiptext_owner">{{tier.tier.owner}}</span>
+                            </span>
+                          </div>
+                        </span>
+                    </button>
+                    <div
+                      class="dropdown-menu scrollbar"
+                      [ngClass]="t.length>3 ? 'scrollbar-drop' : ''"
+                      aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item"
+                        *ngFor="let ticket of tier.ticketsId, let i = index"
+                        (click)="getTicket(tier.tier['_id'], ticket); showTicket(ticket)"
+                        [ngClass]="{'activeItem': selectedIndex == ticket}">{{'my_bets.ticket' | translate}} {{i + 1}}</a>
+                    </div>
+                  </div>
+                  <p id="alert" class="text-center">
+                  </p>
+                </div>
+              </div>
+              <a class="carousel-control-prev"
+                *ngIf="allTier.length>1"
+                href="#carouselExampleIndicators"
+                role="button"
+                data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next"
+                *ngIf="allTier.length>1"
+                href="#carouselExampleIndicators"
+                role="button"
+                data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+          <div class="games_completed" *ngIf='check !== 0'>
+            <p>{{info_table}}</p>
+          </div>
+          <!-- <div class="games_completed2">
+            <p>{{'games.update_players' | translate}}!</p>
+          </div> -->
+          <div class="tickets loading"  *ngIf="isLoadingGroup">
+            <div class="spinner ">
+              <div class="rect1"></div>
+              <div class="rect2"></div>
+              <div class="rect3"></div>
+              <div class="rect4"></div>
+              <div class="rect5"></div>
+            </div>
+          </div>
+          <div *ngIf="!isLoadingGroup">
+            <div class="tickets" *ngFor="let key of betskeys" >
+              <div  class="date" *ngIf="bets[key][bets[key].length-1].rankings != true">
+                <p *ngIf="!bets[key][0].match">
+                  {{bets[key][0].formatted_date | date: "EEEE"}},
+                  {{bets[key][0].formatted_date | date: "MMMM"}}
+                  {{bets[key][0].formatted_date | date: "d"}}</p>
+                <p *ngIf="bets[key][0].match">
+                  {{bets[key][0].match[0].formatted_date | date: "EEEE"}},
+                  {{bets[key][0].match[0].formatted_date | date: "MMMM"}}
+                  {{bets[key][0].match[0].formatted_date | date: "d"}}</p>
+              </div>
+              <div class="ng-cont"  *ngFor="let bet of bets[key]; let index = index;">
+                <div
+                *ngIf="bet.rankings != true"
+                class="editable"
+                [ngClass]="{'fullTime': bet.status == 'FT' || bet.status !== ''}">
+                <div class="edit">
+                  <p>
+                    <span>{{bet.formatted_date | date: "H:mm"}}</span>
+                    <span>
+                      <a (click)="editBet(bet)"
+                         style="cursor: pointer"
+                         *ngIf="(!bet.bet || (bet.closeRoundDays * 24 + bet.closeRoundHours) > 24)"
+                         [ngClass]="{'noneBlock': bet.status == 'FT' || bet.status !== ''}">
+                        <span>{{'games.edit' | translate}}</span>
+                        <img src="../../../assets/images/edit.png" alt="edit bet">
+                      </a>
+                    </span>
+                  </p>
+                </div>
+                <div class="teams">
+                  <div class="home_team">
+                    <img [src]="bet.localteam_img" alt="team">
+                    <p class="name_team">{{bet.localteam_name}}</p>
+                    <input
+                      class="count_goal"
+                      [(ngModel)]="localScore[bet.id]"
+                      type="number"
+                      (ngModelChange) = "changingScore(bet)"
+                      [disabled]="bet.bet && !bet.edit || bet.status === 'FT'">
+                  </div>
+                  <div class="away_team">
+                    <img [src]="bet.visitorteam_img" alt="team">
+                    <p class="name_team">{{bet.visitorteam_name}}</p>
+                    <input
+                      class="count_goal"
+                      [(ngModel)]="visitorScore[bet.id]"
+                      type="number"
+                      (ngModelChange) = "changingScore(bet)"
+                      [disabled]="bet.bet && !bet.edit || bet.status === 'FT'">
+                  </div>
+                  <div class="goal_name">
+                    <img src="../../../assets/images/goal.png" alt="first goal">
+                    <p class="name_team">{{'games.first_goal' | translate}}</p>
+                    <div class="">
+                      <select
+                        class="selectpicker"
+                        style="min-width: 161px"
+                        [(ngModel)]="selectedValue[bet.id]"
+                        [disabled]="bet.bet && !bet.edit ||
+                        localScore[bet.id] === 0 && visitorScore[bet.id] === 0 ||
+                        bet.status === 'FT'">
+                        <option></option>
+                        <option *ngFor="let loc of bet.localteam_squad.squad"
+                          [value]="loc"
+                          selected
+                          style="color:#d0fbd0b0">
+                          <span>{{loc}} ({{bet.localteam_squad.country.code}})</span>
+                        </option>
+                        <option *ngFor="let vis of bet.visitorteam_squad.squad"
+                          [value]="vis"
+                          selected
+                          style="color:lightblue">
+                          <span>{{vis}} ({{bet.visitorteam_squad.country.code}})</span>
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="btn_save"
+                  [ngClass]="{'noneBlock': bet.status == 'FT' || bet.status !== ''}">
+                    <div >
+                      <button
+                        *ngIf="(!bet.bet && (bet.closeRoundDays*24+bet.closeRoundHours) > 24 ) && !bet.edit || !bet.bet "
+                        class="btn btn-outline-success save"
+                        [disabled]="visitorScore[bet.id] == null || localScore[bet.id] == null || bet.status === 'FT'"
+                        (click)="makeaBet(localScore[bet.id], visitorScore[bet.id], bet,
+                        $event, bets, bet.id, selectedValue[bet.id])">{{'games.save' | translate}}
+                      </button>
+                    </div>
+                    <button
+                      *ngIf="bet.edit "
+                      class="btn btn-outline-success"
+                      (click)="saveEditedBet(localScore[bet.id], visitorScore[bet.id],
+                      selectedValue[bet.id], bet)"
+                      [disabled]="visitorScore[bet.id] == null || localScore[bet.id] == null || bet.status === 'FT'">{{'games.save' | translate}}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="redirect" [class.blockTop]="check == 0"  class="no-tickets">
+            <p>{{'games.any_tick' | translate}} <a routerLink="/desktop">buy one</a></p>
+          </div>
+          <div *ngIf="unfillLoading" class="no-tickets">
+            <p>{{'games.you_made' | translate}}!</p>
+          </div>
+          <div *ngIf="myBetLoading" class="no-tickets">
+            <p>{{'games.dont_have' | translate}}!</p>
+          </div>
+          <div *ngIf="not_exist" class="no-tickets">
+            <p>{{'games.available' | translate}}! </p>
+          </div>
+          <div *ngIf="played" class="no-tickets">
+            <p>{{'games.played' | translate}}! </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+@font-face {
+    font-family: 'HelveticaNeueCyr-Medium';
+    src: url('../../../assets/fonts/HelveticaNeueCyr-Medium.ttf');
+    }
+    .wrap{
+        background-image: url(../../../assets/images/bg-main-compressor.jpg);
+        background-repeat:  no-repeat;
+        background-size: cover;
+        width: 100vw;
+        height: 100vh;
+    }
+div.error{
+    background-color: rgba(0, 0, 0, 0.65);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+p{
+    font-family: HelveticaNeueCyr-Medium;
+    color: rgba(255, 255, 255, 1)
+}
+.not-found{
+        font-size: 5rem;
+        margin-bottom: 0;
+}
+.page{
+    font-size: 2rem;
+}
+button.btn.btn-outline-success {
+    max-width: 279px;
+    width: 100%;
+    height: 43px;
+    border-radius: 0;
+    font-size: 18px;
+    line-height: 1.33;
+    color: rgba(255, 255, 255, 1);
+    background: url(../../../assets/images/arrow.png) no-repeat;
+    background-position: 95% 50%;
+    padding-right: 27px;
+  }
+button.btn.btn-outline-success:hover {
+    color: rgba(0, 229, 117, 1);
+  }
+
+
+@media screen and (min-width: 320px) and (max-width: 550px) {
+.not-found{
+        font-size: 2.8rem;
+    }
+    .page {
+        font-size: 1.5rem;
+    }
+
+}

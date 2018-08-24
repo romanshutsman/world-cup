@@ -1,0 +1,50 @@
+<div class="tab-pane fade show active"
+     role="tabpane2"
+     id="invitation"
+     aria-labelledby="invitation-tab"
+     aria-expanded="true">
+  <table class="table-head">
+    <tr>
+      <th>email</th>
+      <th class="tableTierName">{{'account.tier_name' | translate}}</th>
+      <th></th>
+      <!--<th>prize</th>-->
+      <th>{{'account.status' | translate}}</th>
+    </tr>
+  </table>
+  <div  class="scroll-box loading" *ngIf="isLoadingInvite">
+    <div class="spinner  ">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+  <div class="scroll-box" *ngIf="!isLoadingInvite">
+    <div class="table-box">
+      <table class="invitation">
+        <tbody>
+        <tr *ngFor="let user of getInvent">
+          <td class="inviteEmail">{{ user.from}}</td>
+          <td class="inviteTierName">{{ user.tier.name }}</td>
+          <td></td>
+          <!--<td class="invitePrize">$ {{ user.tier.prize === 0 ? (user.tier.price * 0.8).toFixed(0) : user.tier.prize }}</td>-->
+          <td class="inviteStatus"
+              *ngIf="user.status === 'accept' || user.status === 'reject'"
+              [class.rejaccept]="user.status === 'accept' || user.status === 'reject'"
+              [ngClass]="user.status">{{ user.status }}ed
+          </td>
+          <td *ngIf="user.status === 'pending'" class="no-status">
+            <a class="accept" (click)="acceptTierInvitation(user._id)"></a>
+            <a class="reject" (click)="rejectTierInvitation(user._id)"></a>
+          </td>
+        </tr>
+        <div *ngIf="getInvent.length == 0">
+          <h3 style="text-align:  center;color:  white; font-size: 20px;"> {{'account.not_invite' | translate}}!</h3>
+        </div>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<section class="container-fluid login-main">
+  <table class="main-header-1">
+    <td class="main-header-2">WORLD CUP BET LEAGUE</td>
+  </table>
+  <div class="container">
+    <div class="row">
+        <article class="buy">
+          <a class="close"  routerLink="/desktop" >
+            <img src="../../../assets/images/popup_close.png" alt="close">
+          </a>
+          <p class="ticket">Accept a offer</p>
+            <div class="system-amount">
+              <p class="both system">buy by system</p>
+              <p class="both amount">Amount to replenish</p>
+            </div>
+            <p class="paypal"><img src="../../../assets/images/paypall.png" alt="paypal">
+              <span>Paypal</span>
+            </p>
+            <p class="price">1 $</p>
+            <button
+              type="submit"
+              class="btn btn-outline-success"
+            (click)="onRoutPayPal()">Continue</button>
+            <div class="loader d-block mx-auto" *ngIf="showLoader"></div>
+        </article>
+    </div>
+  </div>
+</section>

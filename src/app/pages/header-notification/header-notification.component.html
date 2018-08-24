@@ -1,0 +1,57 @@
+<div class="container-fluid notify">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg" >
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item ">
+          <a class="nav-link "  >
+              <div class="btn-group select" (click)='dropSelect();'>
+                <a class="btn dropdown-toggle btn-select" data-toggle="dropdown" href="#"><img class="flag" src="{{selectedLang.src}}" alt="{{selectedLang.lang}}">{{selectedLang.lang}} <span class="caret"></span></a>
+                <ul class="dropdown-menu" >
+                  <li (click)="changeLeanguage('en')"><a><img class="flag" src="../../../assets/images/gb.svg" alt="EN">ENG</a></li>
+                  <li (click)="changeLeanguage('pt')"><a><img class="flag" src="../../../assets/images/br.svg" alt="BRA">BRA</a></li>
+                </ul>
+              </div>
+          </a>
+        </li>
+        <li class="nav-item ntf">
+          <a class="nav-link " >
+            <div   class="btn-group ">
+              <button (click)=" showNotification()" class="btn dropdown-toggle btn-select notification" data-toggle="dropdown" href="#">
+                <div class="notification-container">
+                  <img  src="../../../assets/images/rring.png" alt="notification">
+                  <div [class.counter]="counter == 0">
+                    <span class="notification-counter">{{counter}}</span>
+                  </div>
+                </div>
+              </button>
+              <ul class="dropdown-menu" >
+                <div class="arr"><div class="arrow-up"></div></div>
+                <div class="scrollbar">
+                  <div class="readAll" (click)="readAll()" >{{'desktop.read' | translate}}</div>
+                  <li   *ngFor="let n of notif"  >
+                    <a 
+                    style="word-break: break-word;"
+                    (click)="routeTo(n.type)" 
+                    (mouseover)="readOne(n._id, n)"  
+                    [ngStyle]="{color: n.status === 'read' ? 'grey' : 'white'}"
+                    [ngClass]="{notif: n._id == notId && isColor}">{{n.message}}
+                    </a>
+                  </li>
+                </div>
+              </ul>
+            </div>
+          </a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link " >
+            <span class="user_tiers">{{'desktop.user_tiers' | translate}}</span>
+            <label class="switch">
+              <input class="toggleUser"  [checked]="true" type="checkbox" [disabled]="true">
+              <span   [class.stat]="!staticToggle" class="slider round"></span>
+            </label>
+          </a>
+        </li>
+      </ul>
+      </nav>
+  </div>
+</div>

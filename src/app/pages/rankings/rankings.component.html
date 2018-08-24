@@ -1,0 +1,179 @@
+<div class="container-fluid">
+  <app-header-notification></app-header-notification>
+  <div class="wrap_menu">
+    <app-menu></app-menu>
+  </div>
+  <div class="container loading"  *ngIf="authenticated && isloading">
+    <div class="spinner ">
+      <div class="rect1"></div>
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div>
+  </div>
+  <div class="container" *ngIf="!isloading">
+    <div class="row" >
+      <div class="col-md-12">
+        <div
+          id="carouselExampleIndicators"
+          class="carousel slide"
+          data-ride="carousel"
+          data-interval="false">
+          <div class="carousel-inner " id="carousel_inner">
+            <div
+              class="carousel-item "
+              *ngFor="let tiers of allTiers, let i = index"
+              [ngClass]="i == 0 ? 'carousel-item active' : 'carousel-item'">
+              <div class="item" *ngFor="let tier of tiers">
+                <div >
+                  <button
+                    class="btn btn-secondary "
+                    (click)="showTier(tier['_id'], show);"
+                    [ngClass]="{'tierid': selectedTier == tier['_id']}"
+                    type="button" >
+                    <span *ngIf="false">
+                      {{'my_bets.tier' | translate}} {{tier.price}}$ 
+                    </span>
+                    <span *ngIf="true" class="userTier">
+                      <span class="userTierHiden">{{tier.name}}</span>
+                      <div class="tool_tip_userTier">
+                        <div class="arrow-up"></div>
+                        <span class="tooltiptext">
+                          <span class="tooltiptext_name">{{'my_bets.tier' | translate}}: {{tier.name}}</span>
+                          <br>
+                          <span class="tooltiptext_owner">{{tier.owner}}</span>
+                        </span>
+                      </div>
+                    </span>
+                  </button>
+                </div>
+                <p id="alert" class="text-center">
+                </p>
+              </div>
+            </div>
+            <a class="carousel-control-prev"
+              *ngIf="allTiers.length>1"
+              href="#carouselExampleIndicators"
+              role="button"
+              data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next"
+              *ngIf="allTiers.length>1"
+              href="#carouselExampleIndicators"
+              role="button"
+              data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="wrap loading"  *ngIf="isLoadingGroup">
+          <div class="spinner ">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+          </div>
+        </div>
+        <div class="wrap" *ngIf="!isLoadingGroup">
+          <div class="update">
+            <pre>{{'rank.actual' | translate}}   {{timeRank | date: 'dd/MM/yy H:mm'}}</pre>
+          </div>
+          <div class="tool_tip rank">
+            <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+            <div class="arrow-up rank"></div>
+            <span class="tooltiptext rank">{{'rank.tooltip' | translate}}</span>
+          </div>
+          <div class="cust-table-cont" *ngIf="!show;">
+            <div class="table-responsive" >
+              <table  class="table cust-table">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th  scope="col">{{'rank.user' | translate}}</th>
+                  <th scope="col">{{'rank.points' | translate}}</th>
+                </tr>
+                </thead>
+                <tbody class="tier scrollbar" #position *ngIf="rankings.length != 0">
+                <ng-container *ngFor="let item of rankings, let i = index"  >
+                  <tr (click)="showBlock(item.user);toggleArrow(item)" class={{item.id}} [class.addClass]="item.user.name === userClass ? addClass : ''">
+                    <td>{{item.position}}</td>
+                    <td *ngIf="!admin">{{item.user.name}} </td>
+                    <td *ngIf="admin">{{item.user.email}}</td>
+                    <td class={{item.class}} [ngClass]="item.user.name">{{item.points}}
+                      <img *ngIf="item.user.name === user && showArrow == 1"
+                           class="possitiOnArrow"
+                           [ngClass]="toggle && toggleArr == item ? 'activeArrow' : ''"
+                           src="../../../assets/images/arroow_down.png"
+                           alt="arrow">
+                    </td >
+                  </tr>
+                  <div *ngIf="item.user.name === user"
+                       [ngClass]="toggle && toggleArr == item ? 'showDropdown' : 'hideDropdown'"
+                       [ngStyle]="{'height': toggle && toggleArr == item ? (rank_tickets.length > 9 ? 43*11+'px' :
+                       43*rank_tickets.length+'px') : 0}">
+                    <table class="all_tickets">
+                      <tbody class="ticket">
+                      <div *ngFor="let t of rank_tickets, let j = index">
+                        <tr *ngIf="j<10" class="show_row">
+                          <td>{{'my_bets.ticket' | translate}} {{j+1}}</td>
+                          <td>{{t.points}} </td>
+                        </tr>
+                      </div>
+                      <a class="show_more" *ngIf="ticketsLenght > 10" (click)="show = !show">
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td class="arrow_right">{{'rank.show_more' | translate}}</td>
+                        </tr>
+                      </a>
+                      </tbody>
+                    </table>
+                  </div>
+                </ng-container>
+                </tbody>
+                <tbody class="tier scrollbar" #position *ngIf="rankings.length == 0">
+                <ng-container>
+                  <p class="rank-empty">{{'rank.nobody' | translate}} !!</p>
+                </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="rank" *ngIf="show">
+            <div class="cust-table-cont ">
+              <div class="table-responsive">
+                <table  class="table cust-table">
+                  <thead>
+                  <tr *ngFor="let t of user_info">
+                    <th scope="col">{{t.position}}</th>
+                    <th scope="col">{{t.user.name}}</th>
+                    <th scope="col">{{t.points}}</th>
+                  </tr>
+                  </thead>
+                  <tbody class="tier scrollbar">
+                  <ng-container *ngFor="let t of rank_tickets, let i = index" >
+                    <tr >
+                      <td >{{'my_bets.ticket' | translate}} {{i+1}}</td>
+                      <td >{{t.points}}</td >
+                    </tr>
+                  </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <a (click)="showTicket();show = !show" class="back">{{'rank.back' | translate}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

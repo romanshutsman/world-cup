@@ -1,0 +1,17 @@
+<app-header-notification class="head"></app-header-notification>
+<section class="container-fluid login-main">
+  <table class="main-header-1">
+    <td class="main-header-2">WORLD CUP BET LEAGUE</td>
+  </table>
+  <div class="container">
+    <div class="row">
+      <article class="paypal-success">
+        <h3>{{'bought_ticket.success' | translate}}!</h3>
+        <div class="buttons">
+          <button routerLink="/" class="buy-more btn btn-outline-success" (click)="clearStorage()"><a>{{'bought_ticket.more' | translate}}</a></button>
+          <button routerLink="/games" class="make-bets btn btn-outline-success" (click) = "betOfTier()"><a>{{'bought_ticket.make' | translate}}</a></button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

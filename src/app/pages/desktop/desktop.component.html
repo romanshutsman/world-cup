@@ -1,0 +1,862 @@
+<section class="container-fluid login-main" >
+    <app-header-notification></app-header-notification>
+  <table class="main-header-1">
+    <td class="main-header-2">WORLD CUP BET LEAGUE</td>
+  </table>
+    <div class="wrap_menu">
+      <app-menu></app-menu>
+    </div>
+    <div class="container">
+      <div class="row">
+          <div class="col-md-7 col-12 news loading"  *ngIf="isloadingNews">
+              <div class="spinner  ">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+              </div>
+          </div>
+        <div class="col-md-7 col-12 news" *ngIf="!isloadingNews">
+          <div class="wrap">
+            <div class="news-block-1 news-block">
+              <span class="find-news" [class.styleForHead]="styleForHead">{{'desktop.head_news' | translate}}</span>
+              <div class="choose-team">
+                    <div class="btn-group select" (click)='drop();'>
+                      <a class="btn btn-success dropdown-toggle btn-select" data-toggle="dropdown" href="#">{{selectedCountry}} <span class="caret"></span></a>
+                      <ul class="dropdown-menu scrollbar" >
+                        <li *ngFor="let c of countries" (click)="getNews(c)"><a >{{c.name}}</a></li>
+                      </ul>
+                    </div>
+              </div>
+            </div>
+
+            <div class="news-block news-block-2">
+              <div class="img-news">
+                <p>{{'desktop.news_update' | translate}}</p>
+                  <img
+                    class="img-fluid d-block mx-auto"
+                    src="{{news_1_img}}"
+                    alt="img-news">
+              </div>
+              <div class="description">
+                <p id="title1" [innerHTML]="news_1_title"></p>
+                <p id='desc1' [innerHTML]="news_1_description"></p>
+                <a href="{{news_1_link}}" class="link1" target="_blank">Read more...</a>
+              </div>
+            </div>
+
+            <div class="news-block news-block-3">
+                <div class="news-item">
+                    <div class="img-news-item">
+                      <img class="img-fluid d-block mx-auto" src="{{news_2_img}}" alt="news-item">
+                    </div>
+                    <p id="title2" [innerHTML]="news_2_title"></p>
+                    <p id='desc2' [innerHTML]="news_2_description"></p>
+                    <a href="{{news_2_link}}" class="link2" target="_blank">Read more...</a>
+                </div>
+                <div class="news-item">
+                    <div class="img-news-item" >
+                      <img class="img-fluid d-block mx-auto" src="{{news_3_img}}" alt="news-item">
+                    </div>
+                    <p id="title3" [innerHTML]="news_3_title"></p>
+                    <p id='desc3' [innerHTML]="news_3_description"></p>
+                    <a href="{{news_3_link}}" class="link2" target="_blank">Read more...</a>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="loading-ticket col-md-5 col-12 buy-ticket loading"  *ngIf="isloadingTicket">
+          <div class="spinner  ">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+          </div>
+        </div>
+        <div class="col-md-5 col-12 buy-ticket" *ngIf="!isloadingTicket">
+          <div id="container">
+          <div class="buy-ticket-wrap">
+            <div class="buy-ticket-header" [class.userTier]="togTier">
+              <p *ngIf="auth.isAuthenticated()" >{{'desktop.buy_ticket' | translate}}</p>
+              <p *ngIf="!auth.isAuthenticated()">{{'desktop.join' | translate}}!</p>
+              <button *ngIf="true && auth.isAuthenticated()" class="createNewTier" (click)="goToAccount();">{{'desktop.create_tier' | translate}}</button>
+              <div class="tool_tip" *ngIf="false">
+                <img class="info_img" src="../../../assets/images/information.svg" alt="info">
+                <div class="arrow-up desktop"></div>
+                <span class="tooltiptext">Select the tier price of the ticket</span>
+              </div>
+            </div>
+            <div *ngIf="auth.isAuthenticated()" class="controls">
+              <input *ngIf="auth.isAuthenticated()" type="text" class="searchUsername" placeholder="{{'desktop.search' | translate}}" [(ngModel)]="searchUser"><img *ngIf="auth.isAuthenticated()" class="searchUsernameIcon" src="../../../assets/images/serch.png" alt="search">
+                <button
+                  class="btn btn-outline-success arrow"
+                  id="up"
+                  (click)="scroll_up()"></button>
+            </div>
+              <div class="scroll" [ngStyle]="{ height: auth.isAuthenticated() === true ? '867px' : '0'}">
+                <div *ngIf="false">
+                  <div class="game game-1" *ngFor="let tier of tier1, let i = index">
+                      <p class="block-1">{{'my_bets.tier' | translate}} {{tier.price}}$</p>
+                      <div class="block-2">
+                          <img src="../../../assets/images/price.png" alt="price">
+                          <p>{{'desktop.price' | translate}}</p>
+                      </div>
+                      <div class="block-3">
+                          <img src="../../../assets/images/prize.png" alt="prize">
+                          <p>{{'desktop.prize' | translate}}</p>
+                      </div>
+                      <div class="block-4">
+                          <p class="price">{{tier.price}}</p>
+                      </div>
+                      <div class="block-5">
+                          <p class="prize">{{tier.prize.toFixed(0)}}</p>
+                          <button *ngIf="checkAdmin();" (click)="increasePrize(tier._id)" class="increase"><img src="../../../assets/images/increase.svg" alt="increase"></button>
+                      </div>
+                      <div class="block-6">
+                          <button
+                            type="submit"
+                            class="btn btn-outline-success"
+                            (click)="buyTicket(tier._id)">{{'desktop.buy_ticket' | translate}}</button>
+                      </div>
+                  </div>
+                </div>
+                <div *ngIf="togTier">
+                  <div class="scroll loading" *ngIf="isloadingUserTicket">
+                    <div class="spinner  ">
+                      <div class="rect1"></div>
+                      <div class="rect2"></div>
+                      <div class="rect3"></div>
+                      <div class="rect4"></div>
+                      <div class="rect5"></div>
+                    </div>
+                  </div>
+                  <div *ngIf="!isloadingUserTicket">
+                    <div *ngIf="userTiersLength == 0" class="game user game-1" style="font-size: 22px;display:  flex; color: white; justify-content:  center; align-items:  center; text-align:  center;">
+                      <div>{{'desktop.havent_tier' | translate}}<br>
+                        {{'desktop.please' | translate}}, 
+                        <a routerLink="/account/user-tier/create" style="color: rgba(16, 185, 28, 1); text-decoration:  none;">
+                        {{'desktop.your_tier' | translate}}</a>!
+                      </div>
+                    </div>
+                    <div *ngIf="userTiersLength > 0">
+                        <div class="game user game-1" *ngFor=" let i = index ; let tier of userTiers | search: searchUser">
+                            <p class="block-1">{{tier.name}}</p>
+                            <p class="block-created" >(created by {{tier.owner}})</p>
+                            <div class="block-stage">
+                                <p>{{'desktop.stage' | translate}}</p>
+                            </div>
+                            <!-- <div class="block-2">
+                                <img src="../../../assets/images/price.png" alt="price">
+                                <p>{{'desktop.price' | translate}}</p>
+                            </div>
+                            <div class="block-3">
+                                <img src="../../../assets/images/prize.png" alt="prize">
+                                <p>{{'desktop.prize' | translate}}</p>
+                            </div> -->
+                            <div class="block-stage-name">
+                                <p class="stage">{{tier.nameStage}}</p>
+                            </div>
+                            <!-- <div class="block-4">
+                                <p class="price">{{tier.price}}</p>
+                            </div>
+                            <div class="block-5">
+                                <p class="prize">{{tier.prize === 0 ? (tier.price * 0.8).toFixed(0) : tier.prize}}</p>
+                            </div> -->
+                            <p class="stage" style="color: rgba(95, 178, 255, 1);"></p>
+                            <div class="block-stage-name" *ngIf="!showBtn && tierMatch.includes(tier._id)" >
+                                <p class="stage" style="color: rgba(95, 178, 255, 1);">You have already bought this Tier!</p>
+                            </div>
+                            <div class="block-6" *ngIf="!showBtn && !tierMatch.includes(tier._id) || tierCarousel == 0" >
+                                <button
+                                  type="submit"
+                                  class="btn btn-outline-primary"
+                                  (click)="getUserTierById(tier._id)">{{'desktop.enjoy' | translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <div *ngIf="auth.isAuthenticated()" class="controls">
+                <button class="btn btn-outline-success arrow down" (click)="scroll_down()"></button>
+            </div>
+            <div  *ngIf="!auth.isAuthenticated()" class="unlogged-user-wrap">
+              <div class="gif">
+                <div class="gif-subtext">
+                  <span class="numb">1</span><p class="title-unlog" > {{'desktop.create_own' | translate}}</p>
+                </div>
+                <div class="gif-img">
+                  <img src="../../../assets/images/gif-down.gif" alt="">
+                </div>
+              </div>
+              <div class="gif">
+                <div class="gif-subtext">
+                  <span class="numb">2</span><p class="title-unlog">{{'desktop.make' | translate}}</p>
+                </div>
+                <div class="gif-img">
+                  <img src="../../../assets/images/gif-top.gif" alt="">
+                </div>
+              </div>
+              <div class="gif">
+                <div class="gif-subtext">
+                  <span class="numb">3</span><p class="title-unlog">{{'desktop.find' | translate}}</p>
+                </div>
+                <div class="gif-img">
+                  <img src="../../../assets/images/rank-unlogged.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<section class="container-fluid groups">
+    <div class="container">
+        <div class="row">
+            <div class="menu-table">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="groups-tab"
+                    data-toggle="tab"
+                    href="#groups"
+                    role="tab"
+                    aria-controls="groups"
+                    aria-selected="true"
+                    (click)="getMatchesByStage('group')">Groups
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="finals_1_8-tab"
+                    data-toggle="tab"
+                    href="#finals_1_8"
+                    role="tab"
+                    aria-controls="finals_1_8"
+                    aria-selected="false"
+                    (click)="getMatchesByStage('roundOf16')">1/8 Finals
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+
+                    id="finals_1_4-tab"
+                    data-toggle="tab"
+                    href="#finals_1_4"
+                    role="tab"
+                    aria-controls="finals_1_4"
+                    aria-selected="false"
+                    (click)="getMatchesByStage('quarter')">1/4 Finals</a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link "
+                    id="finals_1_2-tab"
+                    data-toggle="tab"
+                    href="#finals_1_2"
+                    role="tab"
+                    aria-controls="finals_1_2"
+                    aria-selected="false"
+                    (click)="getMatchesByStage('semi')">1/2 Finals</a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="place_3rd-tab"
+                    data-toggle="tab"
+                    href="#place_3rd"
+                    role="tab"
+                    aria-controls="place_3rd"
+                    aria-selected="false"
+                    (click)="getMatchesByStage('third')">3rd Place</a>
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="final-tab"
+                    data-toggle="tab"
+                    href="#final"
+                    role="tab"
+                    aria-controls="final"
+                    aria-selected="false"
+                    (click)="getMatchesByStage('final')">Final</a>
+                </li>
+              </ul>
+            </div>
+            <div class="tab-content" id="myTabContent">
+                <div
+                  class="tab-pane fade show active table-header"
+                  id="groups"
+                  role="tabpanel"
+                  aria-labelledby="groups-tab">
+                    <span class="line_check"><img src="../../../assets/images/line_check.png" alt="line"></span>
+                  <div class="group-items group-a loading"  *ngIf="!groupA">
+                      <div class="spinner  ">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                      </div>
+                  </div>
+                  <div class="group-items group-a" *ngIf="groupA">
+                    <table class="table1 table" style="color: white;">
+                        <tr>
+                            <th scope="col">GROUP A</th>
+                        </tr>
+                        <tr>
+                            <td scope="col">Teams</td>
+                            <td scope="col">MP</td>
+                            <td scope="col">W</td>
+                            <td scope="col">D</td>
+                            <td scope="col">L</td>
+                            <td scope="col">GF</td>
+                            <td scope="col">GA</td>
+                            <td scope="col">+/-</td>
+                            <td scope="col">Pts</td>
+                          </tr>
+                      <ng-container *ngFor="let group of groupA">
+                            <tr>
+                              <td scope="row" >{{group.team_name}}</td>
+                              <td scope="row" >{{group.gp}}</td>
+                              <td scope="row" >{{group.w}}</td>
+                              <td scope="row" >{{group.d}}</td>
+                              <td scope="row" >{{group.l}}</td>
+                              <td scope="row" >{{group.gs}}</td>
+                              <td scope="row" >{{group.ga}}</td>
+                              <td scope="row" >{{group.gd}}</td>
+                              <td scope="row" >{{group.points}}</td>
+                            </tr>
+                      </ng-container>
+                    </table>
+
+                    <table class="table2">
+                        <ng-container *ngFor="let match of timeGroupA">
+                          <tr>
+                              <td scope="row" >{{match.localteam_name}}</td>
+                              <td scope="row">{{match.localteam_score}}</td>
+                              <td scope="row">:</td>
+                              <td scope="row">{{match.visitorteam_score}}</td>
+                              <td scope="row">{{match.visitorteam_name}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'dd/MM/yy'}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'H:mm'}}</td>
+                          </tr>
+                        </ng-container>
+                    </table>
+                  </div>
+                  <div class="group-items group-a loading"  *ngIf="!groupB">
+                      <div class="spinner  ">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                      </div>
+                  </div>
+                  <div class="group-items group-b" *ngIf="groupB">
+                    <table class="table table1" style="color: white;">
+                        <tr>
+                            <th scope="col">GROUP B</th>
+                        </tr>
+                        <tr>
+                            <td >Teams</td>
+                            <td>MP</td>
+                            <td>W</td>
+                            <td>D</td>
+                            <td>L</td>
+                            <td>GF</td>
+                            <td>GA</td>
+                            <td>+/-</td>
+                            <td>Pts</td>
+                          </tr>
+                      <ng-container *ngFor="let group of groupB">
+                            <tr>
+                              <td scope="row" >{{group.team_name}}</td>
+                              <td scope="row" >{{group.gp}}</td>
+                              <td scope="row" >{{group.w}}</td>
+                              <td scope="row" >{{group.d}}</td>
+                              <td scope="row" >{{group.l}}</td>
+                              <td scope="row" >{{group.gs}}</td>
+                              <td scope="row" >{{group.ga}}</td>
+                              <td scope="row" >{{group.gd}}</td>
+                              <td scope="row" >{{group.points}}</td>
+                            </tr>
+                      </ng-container>
+                    </table>
+
+                    <table class="table2">
+                        <ng-container *ngFor="let match of timeGroupB">
+                          <tr>
+                              <td scope="row" >{{match.localteam_name}}</td>
+                              <td scope="row">{{match.localteam_score}}</td>
+                              <td scope="row">:</td>
+                              <td scope="row">{{match.visitorteam_score}}</td>
+                              <td scope="row">{{match.visitorteam_name}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'dd/MM/yy'}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'H:mm'}}</td>
+                          </tr>
+                        </ng-container>
+                      </table>
+                  </div>
+                  <div class="group-items group-a loading"  *ngIf="!groupC">
+                      <div class="spinner  ">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                      </div>
+                  </div>
+                  <div class="group-items group-c" *ngIf="groupC">
+                      <table class="table table1" style="color: white;">
+                          <tr>
+                              <th scope="col">GROUP C</th>
+                          </tr>
+                          <tr>
+                              <td >Teams</td>
+                              <td>MP</td>
+                              <td>W</td>
+                              <td>D</td>
+                              <td>L</td>
+                              <td>GF</td>
+                              <td>GA</td>
+                              <td>+/-</td>
+                              <td>Pts</td>
+                            </tr>
+                        <ng-container *ngFor="let group of groupC">
+                              <tr>
+                                <td scope="row" >{{group.team_name}}</td>
+                                <td scope="row" >{{group.gp}}</td>
+                                <td scope="row" >{{group.w}}</td>
+                                <td scope="row" >{{group.d}}</td>
+                                <td scope="row" >{{group.l}}</td>
+                                <td scope="row" >{{group.gs}}</td>
+                                <td scope="row" >{{group.ga}}</td>
+                                <td scope="row" >{{group.gd}}</td>
+                                <td scope="row" >{{group.points}}</td>
+                              </tr>
+                        </ng-container>
+                      </table>
+
+                      <table class="table2">
+                        <ng-container *ngFor="let match of timeGroupC">
+                          <tr>
+                              <td scope="row" >{{match.localteam_name}}</td>
+                              <td scope="row">{{match.localteam_score}}</td>
+                              <td scope="row">:</td>
+                              <td scope="row">{{match.visitorteam_score}}</td>
+                              <td scope="row">{{match.visitorteam_name}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'dd/MM/yy'}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'H:mm'}}</td>
+                          </tr>
+                        </ng-container>
+                      </table>
+                  </div>
+                  <div class="group-items group-a loading"  *ngIf="!groupD">
+                      <div class="spinner  ">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                      </div>
+                  </div>
+                  <div class="group-items group-d" *ngIf="groupD">
+                      <table class="table table1" style="color: white;">
+                          <tr>
+                              <th scope="col">GROUP D</th>
+                          </tr>
+                          <tr>
+                              <td >Teams</td>
+                              <td>MP</td>
+                              <td>W</td>
+                              <td>D</td>
+                              <td>L</td>
+                              <td>GF</td>
+                              <td>GA</td>
+                              <td>+/-</td>
+                              <td>Pts</td>
+                            </tr>
+                        <ng-container *ngFor="let group of groupD">
+                              <tr>
+                                <td scope="row" >{{group.team_name}}</td>
+                                <td scope="row" >{{group.gp}}</td>
+                                <td scope="row" >{{group.w}}</td>
+                                <td scope="row" >{{group.d}}</td>
+                                <td scope="row" >{{group.l}}</td>
+                                <td scope="row" >{{group.gs}}</td>
+                                <td scope="row" >{{group.ga}}</td>
+                                <td scope="row" >{{group.gd}}</td>
+                                <td scope="row" >{{group.points}}</td>
+                              </tr>
+                        </ng-container>
+                      </table>
+
+                      <table class="table2">
+                        <ng-container *ngFor="let match of timeGroupD">
+                          <tr>
+                              <td scope="row" >{{match.localteam_name}}</td>
+                              <td scope="row">{{match.localteam_score}}</td>
+                              <td scope="row">:</td>
+                              <td scope="row">{{match.visitorteam_score}}</td>
+                              <td scope="row">{{match.visitorteam_name}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'dd/MM/yy'}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'H:mm'}}</td>
+                          </tr>
+                        </ng-container>
+                      </table>
+                  </div>
+                  <div class="group-items group-a loading"  *ngIf="!groupE">
+                      <div class="spinner  ">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                      </div>
+                  </div>
+                  <div class="group-items group-e" *ngIf="groupE">
+                      <table class="table table1" style="color: white;">
+                          <tr>
+                              <th scope="col">GROUP E</th>
+                          </tr>
+                          <tr>
+                              <td >Teams</td>
+                              <td>MP</td>
+                              <td>W</td>
+                              <td>D</td>
+                              <td>L</td>
+                              <td>GF</td>
+                              <td>GA</td>
+                              <td>+/-</td>
+                              <td>Pts</td>
+                            </tr>
+                        <ng-container *ngFor="let group of groupE">
+                              <tr>
+                                <td scope="row" >{{group.team_name}}</td>
+                                <td scope="row" >{{group.gp}}</td>
+                                <td scope="row" >{{group.w}}</td>
+                                <td scope="row" >{{group.d}}</td>
+                                <td scope="row" >{{group.l}}</td>
+                                <td scope="row" >{{group.gs}}</td>
+                                <td scope="row" >{{group.ga}}</td>
+                                <td scope="row" >{{group.gd}}</td>
+                                <td scope="row" >{{group.points}}</td>
+                              </tr>
+                        </ng-container>
+                      </table>
+
+                      <table class="table2">
+                        <ng-container *ngFor="let match of timeGroupE">
+                          <tr>
+                              <td scope="row" >{{match.localteam_name}}</td>
+                              <td scope="row">{{match.localteam_score}}</td>
+                              <td scope="row">:</td>
+                              <td scope="row">{{match.visitorteam_score}}</td>
+                              <td scope="row">{{match.visitorteam_name}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'dd/MM/yy'}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'H:mm'}}</td>
+                          </tr>
+                        </ng-container>
+                      </table>
+                  </div>
+                  <div class="group-items group-a loading"  *ngIf="!groupF">
+                      <div class="spinner  ">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                      </div>
+                  </div>
+                  <div class="group-items group-f" *ngIf="groupF">
+                      <table class="table table1" style="color: white;">
+                          <tr>
+                              <th scope="col">GROUP F</th>
+                          </tr>
+                          <tr>
+                              <td >Teams</td>
+                              <td>MP</td>
+                              <td>W</td>
+                              <td>D</td>
+                              <td>L</td>
+                              <td>GF</td>
+                              <td>GA</td>
+                              <td>+/-</td>
+                              <td>Pts</td>
+                            </tr>
+                        <ng-container *ngFor="let group of groupF">
+                              <tr>
+                                <td scope="row" >{{group.team_name}}</td>
+                                <td scope="row" >{{group.gp}}</td>
+                                <td scope="row" >{{group.w}}</td>
+                                <td scope="row" >{{group.d}}</td>
+                                <td scope="row" >{{group.l}}</td>
+                                <td scope="row" >{{group.gs}}</td>
+                                <td scope="row" >{{group.ga}}</td>
+                                <td scope="row" >{{group.gd}}</td>
+                                <td scope="row" >{{group.points}}</td>
+                              </tr>
+                        </ng-container>
+                      </table>
+
+                      <table class="table2">
+                        <ng-container *ngFor="let match of timeGroupF">
+                          <tr>
+                              <td scope="row" >{{match.localteam_name}}</td>
+                              <td scope="row">{{match.localteam_score}}</td>
+                              <td scope="row">:</td>
+                              <td scope="row">{{match.visitorteam_score}}</td>
+                              <td scope="row">{{match.visitorteam_name}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'dd/MM/yy'}}</td>
+                              <td scope="row">{{match.formatted_date | date: 'H:mm'}}</td>
+                          </tr>
+                        </ng-container>
+                      </table>
+                  </div>
+                  <div class="group-items group-a loading"  *ngIf="!groupG">
+                      <div class="spinner  ">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                      </div>
+                  </div>
+                  <div class="group-items group-g" *ngIf="groupG">
+                        <table class="table table1" style="color: white;">
+                            <tr>
+                                <th scope="col">GROUP G</th>
+                            </tr>
+                            <tr>
+                                <td >Teams</td>
+                                <td>MP</td>
+                                <td>W</td>
+                                <td>D</td>
+                                <td>L</td>
+                                <td>GF</td>
+                                <td>GA</td>
+                                <td>+/-</td>
+                                <td>Pts</td>
+                              </tr>
+                          <ng-container *ngFor="let group of groupG">
+                                <tr>
+                                  <td scope="row" >{{group.team_name}}</td>
+                                  <td scope="row" >{{group.gp}}</td>
+                                  <td scope="row" >{{group.w}}</td>
+                                  <td scope="row" >{{group.d}}</td>
+                                  <td scope="row" >{{group.l}}</td>
+                                  <td scope="row" >{{group.gs}}</td>
+                                  <td scope="row" >{{group.ga}}</td>
+                                  <td scope="row" >{{group.gd}}</td>
+                                  <td scope="row" >{{group.points}}</td>
+                                </tr>
+                          </ng-container>
+                        </table>
+
+                        <table class="table2">
+                          <ng-container *ngFor="let match of timeGroupG">
+                            <tr>
+                                <td scope="row" >{{match.localteam_name}}</td>
+                                <td scope="row">{{match.localteam_score}}</td>
+                                <td scope="row">:</td>
+                                <td scope="row">{{match.visitorteam_score}}</td>
+                                <td scope="row">{{match.visitorteam_name}}</td>
+                                <td scope="row">{{match.formatted_date | date: 'dd/MM/yy'}}</td>
+                                <td scope="row">{{match.formatted_date | date: 'H:mm'}}</td>
+                            </tr>
+                          </ng-container>
+                        </table>
+                  </div>
+                  <div class="group-items group-a loading"  *ngIf="!groupH">
+                      <div class="spinner  ">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                      </div>
+                  </div>
+                  <div class="group-items group-h" *ngIf="groupH">
+                        <table class="table table1" style="color: white;">
+                            <tr>
+                                <th scope="col">GROUP H</th>
+                            </tr>
+                            <tr>
+                                <td >Teams</td>
+                                <td>MP</td>
+                                <td>W</td>
+                                <td>D</td>
+                                <td>L</td>
+                                <td>GF</td>
+                                <td>GA</td>
+                                <td>+/-</td>
+                                <td>Pts</td>
+                              </tr>
+                          <ng-container *ngFor="let group of groupH">
+                                <tr>
+                                  <td scope="row" >{{group.team_name}}</td>
+                                  <td scope="row" >{{group.gp}}</td>
+                                  <td scope="row" >{{group.w}}</td>
+                                  <td scope="row" >{{group.d}}</td>
+                                  <td scope="row" >{{group.l}}</td>
+                                  <td scope="row" >{{group.gs}}</td>
+                                  <td scope="row" >{{group.ga}}</td>
+                                  <td scope="row" >{{group.gd}}</td>
+                                  <td scope="row" >{{group.points}}</td>
+                                </tr>
+                          </ng-container>
+                        </table>
+
+                        <table class="table2">
+                          <ng-container *ngFor="let match of timeGroupH">
+                            <tr>
+                                <td scope="row" >{{match.localteam_name}}</td>
+                                <td scope="row">{{match.localteam_score}}</td>
+                                <td scope="row">:</td>
+                                <td scope="row">{{match.visitorteam_score}}</td>
+                                <td scope="row">{{match.visitorteam_name}}</td>
+                                <td scope="row">{{match.formatted_date | date: 'dd/MM/yy'}}</td>
+                                <td scope="row">{{match.formatted_date | date: 'H:mm'}}</td>
+                            </tr>
+                          </ng-container>
+                        </table>
+                  </div>
+
+                </div>
+                <div
+                  class="tab-pane fade table-header"
+                  id="finals_1_8"
+                  role="tabpanel"
+                  aria-labelledby="finals_1_8-tab">
+                    <span class="line_check">
+                      <img src="../../../assets/images/line_check.png" alt="line">
+                    </span>
+                    <div class="item-1-8">
+                        <table class="table3" style="color: white;">
+                          <ng-container *ngFor="let key of objectKeys(final_1_8)">
+                            <tr>
+                              <td>{{final_1_8[key].localteam_name}}</td>
+                              <td>{{final_1_8[key].localteam_score || '-'}}</td>
+                              <td>:</td>
+                              <td>{{final_1_8[key].visitorteam_score || '-'}}</td>
+                              <td>{{final_1_8[key].visitorteam_name}}</td>
+                              <td>{{key | date: 'dd.MM.yy'}}</td>
+                              <td>{{key | date: 'H:mm'}}</td>
+                              <td>{{final_1_8[key].index}}</td>
+                            </tr>
+                          </ng-container>
+                        </table>
+                    </div>
+                </div>
+                <div
+                  class="tab-pane fade table-header"
+                  id="finals_1_4"
+                  role="tabpanel"
+                  aria-labelledby="finals_1_4-tab">
+                  <span class="line_check">
+                    <img src="../../../assets/images/line_check.png" alt="line">
+                  </span>
+                  <div class="item-1-4">
+                    <table class="table4" style="color: white;">
+                      <ng-container *ngFor="let key of objectKeys(final_1_4)">
+                        <tr>
+                          <td>{{final_1_4[key].localteam_name}}</td>
+                          <td>{{final_1_4[key].localteam_score || '-'}}</td>
+                          <td>:</td>
+                          <td>{{final_1_4[key].visitorteam_score || '-'}}</td>
+                          <td>{{final_1_4[key].visitorteam_name}}</td>
+                          <td>{{key | date: 'dd.MM.yy'}}</td>
+                          <td>{{key | date: 'H:mm'}}</td>
+                          <td>{{final_1_4[key].index}}</td>
+                        </tr>
+                      </ng-container>
+                    </table>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade table-header"
+                  id="finals_1_2"
+                  role="tabpanel"
+                  aria-labelledby="finals_1_2-tab">
+                    <span class="line_check">
+                      <img src="../../../assets/images/line_check.png" alt="line">
+                    </span>
+                    <div class="item-1-2">
+                        <table class="table5" style="color: white;">
+                          <ng-container *ngFor="let key of objectKeys(final_1_2)">
+                                <tr>
+                                  <td>{{final_1_2[key].localteam_name}}</td>
+                                  <td>{{final_1_2[key].localteam_score || '-'}}</td>
+                                  <td>:</td>
+                                  <td>{{final_1_2[key].visitorteam_score || '-'}}</td>
+                                  <td>{{final_1_2[key].visitorteam_name}}</td>
+                                  <td>{{key | date: 'dd.MM.yy'}}</td>
+                                  <td>{{key | date: 'H:mm'}}</td>
+                                  <td>{{final_1_2[key].index}}</td>
+                                </tr>
+                          </ng-container>
+                        </table>
+                    </div>
+                </div>
+                <div
+                  class="tab-pane fade table-header"
+                  id="place_3rd"
+                  role="tabpanel"
+                  aria-labelledby="place_3rd-tab">
+                    <span class="line_check">
+                      <img src="../../../assets/images/line_check.png" alt="line">
+                    </span>
+                    <div class="place-3">
+                        <table class="table6" style="color: white;">
+                          <ng-container *ngFor="let key of objectKeys(place_3)">
+                                <tr>
+                                  <td>{{place_3[key].localteam_name}}</td>
+                                  <td>{{place_3[key].localteam_score || '-'}}</td>
+                                  <td>:</td>
+                                  <td>{{place_3[key].visitorteam_score || '-'}}</td>
+                                  <td>{{place_3[key].visitorteam_name}}</td>
+                                  <td>{{key | date: 'dd.MM.yy'}}</td>
+                                  <td>{{key | date: 'H:mm'}}</td>
+                                </tr>
+                          </ng-container>
+                        </table>
+                    </div>
+                </div>
+                <div
+                  class="tab-pane fade table-header"
+                  id="final"
+                  role="tabpanel"
+                  aria-labelledby="final-tab">
+                    <span class="line_check">
+                      <img src="../../../assets/images/line_check.png"
+                           alt="line">
+                    </span>
+                    <div class="final">
+                        <table class="table7" style="color: white;">
+                          <ng-container *ngFor="let key of objectKeys(final)">
+                                <tr>
+                                  <td>{{final[key].localteam_name}}</td>
+                                  <td>{{final[key].localteam_score || '-'}}</td>
+                                  <td>:</td>
+                                  <td>{{final[key].visitorteam_score || '-'}}</td>
+                                  <td>{{final[key].visitorteam_name}}</td>
+                                  <td>{{key | date: 'dd.MM.yy'}}</td>
+                                  <td>{{key | date: 'H:mm'}}</td>
+                                </tr>
+                          </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+</section>

@@ -1,0 +1,44 @@
+<app-header-notification class="notif"></app-header-notification>
+<section class="container-fluid login-main">
+  <table class="main-header-1">
+    <td class="main-header-2">WORLD CUP BET LEAGUE</td>
+  </table>
+  <div class="container">
+    <div class="row">
+        <article class="buy" *ngIf="!togTier">
+          <a class="close"  routerLink="/desktop" >
+            <img src="../../../assets/images/popup_close.png" alt="close">
+          </a>
+          <p class="ticket">Buy a ticket</p>
+            <div class="system-amount">
+              <p class="both system">buy by system</p>
+              <p class="both amount">Amount to replenish</p>
+            </div>
+            <p class="paypal">
+              <img src="../../../assets/images/paypall.png" alt="paypal">
+              <span>Paypal</span>
+            </p>
+            <p class="price">{{price}} $</p>
+            <button type="submit" class="btn btn-outline-success" (click)="buyTicket()">Continue</button>
+            <div class="loader d-block mx-auto" *ngIf="showLoader"></div>
+        </article>
+        <article class="buy" *ngIf="togTier">
+          <a class="close"  routerLink="/desktop" >
+            <img src="../../../assets/images/popup_close.png" alt="close">
+          </a>
+          <p class="ticket buy_user">Buy a user ticket</p>
+            <div class="system-amount">
+              <p class="both system">buy by system</p>
+              <p class="both amount">Amount to replenish</p>
+            </div>
+            <p class="paypal">
+              <img src="../../../assets/images/paypall.png" alt="paypal">
+              <span>Paypal</span>
+            </p>
+            <p class="price">{{price}} $</p>
+            <button type="submit" class="btn btn-outline-success" (click)="buyUserTicket()">Continue</button>
+            <div class="loader d-block mx-auto" *ngIf="showLoader"></div>
+        </article>
+    </div>
+  </div>
+</section>
